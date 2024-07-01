@@ -1,7 +1,7 @@
 {
   "name": "@ajaxjs/configurable-widget",
   "version": "1.0.0",
-  "description": "Form and List that can be configurabled ",
+  "description": "Form and List that can be configurabled",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lightweight-component/configurable-widget.git"

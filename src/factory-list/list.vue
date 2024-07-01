@@ -2,7 +2,7 @@
   <div>
    <FastTable widget-name="列表" api="http://ss.com" :columns-def="list.columns" />
 
-    <Modal v-model="isShowEdit" title="编辑" width="1300" ok-text="关闭" cancel-text="">
+    <Modal v-model="isShowEdit" title="预览" width="1300" ok-text="关闭" cancel-text="">
      <!--  <ListFactory ref="WidgetFactory" :api-root="apiRoot" :api="api" /> -->
     </Modal>
   </div>

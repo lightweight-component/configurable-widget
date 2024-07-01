@@ -64,19 +64,4 @@ h3 {
 .ivu-menu-submenu-title {
   border-top: 1px solid #eee;
 }
-
-.ivu-menu.ivu-menu-vertical.user {
-  background: url(~@/assets/user.png) no-repeat 110px bottom;
-  background-size: 72%;
-}
-
-.ivu-menu.ivu-menu-vertical.portal {
-  background: url(~@/assets/portal.jpg) no-repeat 100px bottom;
-  background-size: 92%;
-}
-
-.ivu-menu.ivu-menu-vertical.model {
-  background: url(~@/assets/model.jpg) no-repeat 100px bottom;
-  background-size: 68%;
-}
 </style>

@@ -12,6 +12,10 @@ const routes: Array<RouteConfig> = [
 
   },
   {
+    path: '/factory-list-info',
+    component: () => import('./factory-list/edit/list-factory.vue')
+  },
+  {
     path: '/form',
     component: () => import('./factory-form/list-form.vue')
   },

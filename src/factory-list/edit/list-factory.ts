@@ -4,8 +4,8 @@ import CellRender from '../renderer/list-cell-render';
 import ConfigPanel from './list-config.vue';
 import MoreAttrib from './list-more-attrib.vue';
 // import Config from '../data-service/all-dml';
-import ConfigTable from '../widget/config-table.vue';
-import InfoMixins from '../widget/factory-info-common';
+import ConfigTable from '../../widget/config-table.vue';
+import InfoMixins from '../../widget/factory-info-common';
 
 /**
  * 内页
