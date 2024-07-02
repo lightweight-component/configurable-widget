@@ -1,5 +1,5 @@
 import List from '../widget/list';
-import { xhr_get,xhr_del } from '@ajaxjs/ui/dist/util/xhr';
+import { xhr_get,xhr_del } from '@ajaxjs/util/dist/util/xhr';
 
 /**
  * 组件生成器公用

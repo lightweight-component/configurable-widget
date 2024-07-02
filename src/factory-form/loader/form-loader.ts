@@ -2,7 +2,7 @@ import FromRenderer from "../renderer/form-factory-renderer.vue";
 import { xhr_get, xhr_post, xhr_put } from "@ajaxjs/ui/dist/util/xhr";
 import { prepareRequest } from "../../widget/data-binding";
 import { findNode } from "../edit/form-factory";
-import { dateFormat } from '@ajaxjs/ui/dist/util/utils';
+import { dateFormat } from '@ajaxjs/util/dist/util/utils';
 import List from "../../widget/list";
 
 export default {

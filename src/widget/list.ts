@@ -1,5 +1,5 @@
-import { dateFormat } from '@ajaxjs/ui/dist/util/utils';
-import { xhr_del } from '@ajaxjs/ui/dist/util/xhr';
+import { dateFormat } from '@ajaxjs/util/dist/util/utils';
+import { xhr_del } from '@ajaxjs/util/dist/util/xhr';
 
 /**
  * 处理响应的回调函数

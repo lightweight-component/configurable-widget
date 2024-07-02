@@ -1,5 +1,5 @@
 import FromRenderer from "../renderer/form-factory-renderer.vue";
-import { xhr_get } from '@ajaxjs/ui/dist/util/xhr';
+import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
 import { prepareRequest } from '../../widget/data-binding';
 
 export default {

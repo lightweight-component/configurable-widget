@@ -1,6 +1,6 @@
 // import FromRenderer from '../factory-form/form-factory-renderer.vue';
 // import FormLoaderMethod from '../factory-form/loader';
-import { xhr_get, xhr_del } from '@ajaxjs/ui/dist/util/xhr';
+import { xhr_get, xhr_del } from '@ajaxjs/util/dist/util/xhr';
 import { prepareRequest } from '../../widget/data-binding';
 
 /**

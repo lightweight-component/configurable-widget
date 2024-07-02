@@ -9,8 +9,10 @@
 </template>
 
 <script lang="ts">
-import FastTable from '../widget/fast-iview-table.vue';
-import List from '../widget/list';
+// import FastTable from '../widget/fast-iview-table.vue';
+// @ts-ignore
+import FastTable from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/fast-iview-table.vue';
+import List from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/list';
 import CommonFactory from '../widget/factory-list-mixins';
 
 /**

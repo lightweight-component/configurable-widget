@@ -1,4 +1,4 @@
-import { xhr_get, xhr_put, xhr_post } from '@ajaxjs/ui/dist/util/xhr';
+import { xhr_get, xhr_put, xhr_post } from '@ajaxjs/util/dist/util/xhr';
 
 export default {
     props: {
