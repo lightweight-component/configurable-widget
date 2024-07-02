@@ -3,9 +3,7 @@ import App from './App.vue';
 import router from './route';
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
-import '@/style/reset.less';
-
-// import '@/style/common-functions.less';
+import '@ajaxjs/util/dist/style/reset.less';
 
 Vue.config.productionTip = false;
 Vue.use(ViewUI);

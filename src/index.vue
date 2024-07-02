@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ListFactory from "../factory-list/list";
+import ListFactory from "./factory-list/list";
 
 export default {
   components: {
