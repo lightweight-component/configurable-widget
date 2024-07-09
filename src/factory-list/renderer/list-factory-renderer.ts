@@ -1,5 +1,5 @@
-// import FromRenderer from '../factory-form/form-factory-renderer.vue';
-// import FormLoaderMethod from '../factory-form/loader';
+import FromRenderer from '../../factory-form/renderer/form-factory-renderer.vue';
+import FormLoaderMethod from '../../factory-form/loader/loader';
 import { xhr_get, xhr_del } from '@ajaxjs/util/dist/util/xhr';
 import { prepareRequest } from '../../widget/data-binding';
 
@@ -8,7 +8,7 @@ import { prepareRequest } from '../../widget/data-binding';
  * 调用器
  */
 export default {
-    // components: { FromRenderer },
+    components: { FromRenderer },
     props: {
         col: { type: Array, required: true },
         cfg: { type: Object, required: true },

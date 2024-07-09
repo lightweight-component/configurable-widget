@@ -1,4 +1,4 @@
-import List from '../widget/list';
+import List from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/list';
 import { xhr_get,xhr_del } from '@ajaxjs/util/dist/util/xhr';
 
 /**

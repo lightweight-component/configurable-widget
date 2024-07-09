@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import ListMixins from '../widget/common-list-mixins';
+// import ListMixins from '../../widget/common-list-mixins';
+import ListMixins from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/list';
 
 export default {
   mixins: [ListMixins],
@@ -28,6 +29,19 @@ export default {
   },
   data() {
     return {
+       list: {
+          columns: [],
+          data: [],
+          total: 0,
+          start: 0,
+          limit: 9,
+          pageNo: 1,
+          pageSize: 9,
+          loading: false,
+          search: {
+              name: ''
+          },
+      },
       isShowListModal: false,
       listColumns: []
     }
@@ -51,7 +65,7 @@ export default {
       }
     });
 
-    this.getData();
+    // this.getData();
   }
 }
 </script>

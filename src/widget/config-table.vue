@@ -67,7 +67,7 @@
     <slot />
 
     <Modal v-model="isShowFieldsSelect" title="选择数据库字段" width="1000" @on-ok="$parent.fieldsToCfg($refs.DataModelSelector.getSelected())">
-      <DataModelSelector ref="DataModelSelector" :api-root="$parent.apiRoot" />
+      <DataModelSelector ref="DataModelSelector" :api-root="apiRoot" />
     </Modal>
 
     <Modal v-model="isShowApiSelect" title="选择 API 接口" width="500">
@@ -97,6 +97,7 @@ export default {
   },
   data() {
     return {
+      apiRoot: window.config.dsApiRoot,
       isShowLivePerview: false,
       isShowMoreConfig: false,
       isShowMoreAttrib: false,// 是否显示更多的配置（某个属性的）

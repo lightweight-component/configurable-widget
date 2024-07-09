@@ -1,6 +1,10 @@
 <template>
   <div>
-   <FastTable widget-name="列表" api="http://ss.com" :columns-def="list.columns" />
+   <FastTable widget-name="列表" :list-api-url="API" :columns-def="list.columns">
+        <template v-slot:list_action="row">
+            <a @click="openDemo(row.id)">预览</a>   <Divider type="vertical" />
+        </template>
+   </FastTable>
 
     <Modal v-model="isShowEdit" title="预览" width="1300" ok-text="关闭" cancel-text="">
      <!--  <ListFactory ref="WidgetFactory" :api-root="apiRoot" :api="api" /> -->
@@ -9,9 +13,9 @@
 </template>
 
 <script lang="ts">
-// import FastTable from '../widget/fast-iview-table.vue';
+import FastTable from '../widget/fast-iview-table.vue';
 // @ts-ignore
-import FastTable from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/fast-iview-table.vue';
+//import FastTable from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/fast-iview-table.vue';
 import List from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/list';
 import CommonFactory from '../widget/factory-list-mixins';
 
@@ -24,7 +28,7 @@ export default {
     data() {
         return {
             // @ts-ignore
-            API: this.api || `${this.apiRoot}/common_api/widget_config`,
+            API: this.api || `${window.config.dsApiRoot}/common_api/widget_config/page?q_type=LIST`,
             listParams: 'q_type=LIST',
             list: {
                 columns: [

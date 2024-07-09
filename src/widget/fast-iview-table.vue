@@ -20,9 +20,9 @@
 
        <Table :columns="columnsDef" :data="list.data" :loading="list.loading" height="500">
           <template slot-scope="{ row, index }" slot="action">
-            <a @click="openDemo(row.id)">预览</a>
-            <Divider type="vertical" />
-            <a style="color:green;" @click="goInfo(row.id, 'factory-list-info')">编辑</a>
+            <slot name="list_action" :item="row"></slot>
+         
+            <a style="color:green;" @click="$parent.goInfo(row.id, 'factory-list-info')">编辑</a>
             <Divider type="vertical" />
             <Poptip confirm transfer title="是否要删除此行？" @on-ok="deleteInfo(row.id, index)">
               <a style="color:red;">删除</a>

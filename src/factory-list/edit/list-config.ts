@@ -1,11 +1,11 @@
-// import ListSelector from "./list-selector.vue";
-// import FormPerviewLoader from "../factory-form/loader.vue";
-// import FormFactoryMethod from "../factory-form/form-factory.vue";
-// import ApiBinding from "../widget/api-binding.vue";
+import ListSelector from "./list-selector.vue";
+import FormPerviewLoader from "../../factory-form/loader/loader.vue";
+import FormFactoryMethod from "../../factory-form/edit/form-factory.vue";
+import ApiBinding from "../../widget/api-binding.vue";
 import EventGroup from "../../widget/event-group.vue";
 
 export default {
-    components: {  /*ListSelector, FormPerviewLoader,  ApiBinding,*/ EventGroup },
+    components: { ListSelector, ApiBinding, FormPerviewLoader, EventGroup },
     props: {
         listCfg: Object,
         parent: Object,
@@ -62,7 +62,7 @@ export default {
          */
         getFormConfig(): string {
             let cfg: ListFactory_ListConfig = this.listCfg;
-            
+
             if (cfg.bindingForm && cfg.bindingForm.id)
                 return (cfg.bindingForm.name || "") + "#" + cfg.bindingForm.id;
             else return "未绑定";

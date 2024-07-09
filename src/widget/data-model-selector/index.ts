@@ -35,10 +35,6 @@ export default {
         getDatasource(): void {
             let params: any = { start: 0, limit: 999 };
 
-            let dp_appId: string = window.sessionStorage.getItem('APP_ID');
-            if (dp_appId)
-                params.appId = dp_appId;
-
             xhr_get(this.API, (j: RepsonseResult) => {
                 if (j.status) {
                     this.datasource.list = j.data;

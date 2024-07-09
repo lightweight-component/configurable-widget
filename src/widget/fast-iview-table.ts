@@ -3,8 +3,9 @@ import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
 export default {
     props: {
         widgetName: { type: String, required: true },
-        api: { type: String, required: true },  // 接口地址
+        apiUrl: { type: String, required: false },  // 接口地址
         columnsDef: { type: Array, required: true },  // 列定义
+        listApiUrl: { type: String, required: false }
     },
     data() {
         return {
@@ -23,7 +24,11 @@ export default {
             } as TableListConfig
         };
     },
+    mounted() {
+        this.getData();
+    },
     methods: {
+        o(){debugger;},
         getData(): void {
             this.list.loading = true;
             let params: any = { pageNo: this.list.pageNo, pageSize: this.list.pageSize };
@@ -31,7 +36,7 @@ export default {
             // if (this.list.search.name)
             //     params.where = `name LIKE '%${this.list.search.name}%'`;
 
-            xhr_get(this.API, (j: RepsonseResult) => {
+            xhr_get(this.listApiUrl, (j: RepsonseResult) => {
                 this.list.loading = false;
 
 

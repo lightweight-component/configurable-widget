@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import HtmlEditor from '@ajaxjs/ui/dist/widget/HtmlEditor/HtmlEditor';
+import HtmlEditor from '@ajaxjs/util/dist/widget/HtmlEditor/HtmlEditor';
 
 export default {
   components: { HtmlEditor },

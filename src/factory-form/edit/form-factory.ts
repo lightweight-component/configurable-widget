@@ -1,7 +1,7 @@
 import MoreAttrib from './form-more-attrib.vue';
-import FromRenderer from './form-factory-renderer.vue';
-import FormPerviewLoader from './loader.vue';
-import ConfigTable from '../widget/config-table.vue';
+import FromRenderer from '../renderer/form-factory-renderer.vue';
+import FormPerviewLoader from '../loader/loader.vue';
+import ConfigTable from '../../widget/config-table.vue';
 import ConfigPanel from './form-config.vue';
 import InfoMixins from '../../widget/factory-info-common';
 import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
