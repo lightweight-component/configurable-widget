@@ -15,7 +15,8 @@ export default {
     mixins: [InfoMixins],
     data(): {} {
         return {
-            API: this.api || `${this.apiRoot}/common_api/widget_config`,
+            // @ts-ignore
+            API: this.api || `${config.dsApiRoot}/common_api/widget_config`,
             isShowPerview: false,
             initTableData: [], // 预览用的表格数据
             rendererColDef: [] as iViewTableColumn[], // 渲染器的列定义
