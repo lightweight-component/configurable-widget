@@ -9,20 +9,19 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: () => import(/* webpackChunkName: "about" */ './index.vue'),
-
   },
   {
     path: '/factory-list-info',
     component: () => import('./factory-list/edit/list-factory.vue')
   },
   {
+    path: '/list-def',
+    component: () => import('./factory-list-def/index.vue')
+  },
+  {
     path: '/form',
     component: () => import('./factory-form/list-form.vue')
   },
-  {
-    path: '/test',
-    component: () => import('./test.vue')
-  }
 ];
 
 export default new VueRouter({

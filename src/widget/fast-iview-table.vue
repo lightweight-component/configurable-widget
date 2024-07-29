@@ -2,12 +2,12 @@
   <div>
     <!-- 搜索表单 -->
     <Card :bordered="false" dis-hover class="common-search-panel" style="text-align:left">
-        <span style="float:right;">
+      <span style="float:right;">
         <Button type="primary" icon="ios-search" @click="$parent.getData()">查询</Button>
         <Button style="margin-left:10px" @click="reset">重置</Button>
-        </span>
-        <Input suffix="ios-search" v-model="list.search.name" @on-enter="getData" clearable :placeholder="'请输入' + widgetName + '名称'" />
-    </Card> 
+      </span>
+      <Input suffix="ios-search" v-model="list.search.name" @on-enter="getData" clearable :placeholder="'请输入' + widgetName + '名称'" />
+    </Card>
 
     <div>
       <Card :bordered="false" dis-hover>
@@ -15,20 +15,22 @@
           <Tooltip class="ivu-ml" content="刷新" placement="top" style="float:right;padding-top:10px;">
             <Icon size="20" type="ios-refresh" @click="getData" style="cursor: pointer;" />
           </Tooltip>
+
+          <slot name="toolbar"></slot>
           <Button type="primary" icon="md-add" @click="$router.push({ path: 'factory-list-info'})">新建{{widgetName}}</Button>
         </div>
 
-       <Table :columns="columnsDef" :data="list.data" :loading="list.loading" height="500">
+        <Table :columns="columnsDef" :data="list.data" :loading="list.loading" height="500">
           <template slot-scope="{ row, index }" slot="action">
             <slot name="list_action" :item="row"></slot>
-         
+
             <a style="color:green;" @click="$parent.goInfo(row.id, 'factory-list-info')">编辑</a>
             <Divider type="vertical" />
             <Poptip confirm transfer title="是否要删除此行？" @on-ok="deleteInfo(row.id, index)">
               <a style="color:red;">删除</a>
             </Poptip>
           </template>
-        </Table> 
+        </Table>
 
         <Page class="ivu-mt ivu-text-right" :total="list.total" :current.sync="list.pageNo" show-total show-sizer :page-size="list.limit" @on-page-size-change="handleChangePageSize" />
       </Card>
