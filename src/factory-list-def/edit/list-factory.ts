@@ -1,19 +1,23 @@
 import ListRenderer from '../renderer/list-factory-renderer.vue';
 import Fields2Cfg from '../renderer/fields-to-cfg';
 import CellRender from '../renderer/list-cell-render';
-import ConfigPanel from './list-config.vue';
 import MoreAttrib from './list-more-attrib.vue';
 // import Config from '../data-service/all-dml';
 import ConfigTable from '../../widget/config-table.vue';
 import InfoMixins from '../../widget/factory-info-common';
+import ListSelector from "./list-selector.vue";
+import FormPerviewLoader from "../../factory-form/loader/loader.vue";
+import FormFactoryMethod from "../../factory-form/edit/form-factory.vue";
 
 /**
  * 内页
  */
 export default {
-    components: { ListRenderer, ConfigTable, ConfigPanel, MoreAttrib },
+    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, FormPerviewLoader },
     mixins: [InfoMixins],
     data(): {} {
+        let self: any = this;
+
         return {
             // @ts-ignore
             API: this.api || `${config.dsApiRoot}/common_api/widget_config`,
@@ -36,6 +40,42 @@ export default {
                 actionButtons: [],
                 bindingForm: { id: 0, name: '' }
             } as ListFactory_ListConfig,
+            formSelectorCols: [
+                { key: "id", title: "#", width: 60 },
+                { key: "name", title: "名称", minWidth: 80 },
+                { key: "tableName", title: "表名", minWidth: 70 },
+                {
+                    key: "apiUrl",
+                    title: "接口地址",
+                    minWidth: 260,
+                    ellipsis: true,
+                    tooltip: true,
+                },
+                {
+                    title: "预览",
+                    width: 70,
+                    render(h: Function, params: any) {
+                        return h(
+                            "a",
+                            {
+                                on: {
+                                    click: (event: Event) => {
+                                        let FormPerviewLoader = self.$refs.FormPerviewLoader;
+                                        debugger;
+                                        // @ts-ignore
+                                        FormPerviewLoader.cfg = FormFactoryMethod.methods.copyValue(
+                                            {},
+                                            params.row
+                                        ); // 数据库记录转换到 配置对象;
+                                        FormPerviewLoader.isShow = true;
+                                    },
+                                },
+                            },
+                            "预览"
+                        );
+                    },
+                },
+            ],
         }
     },
 
@@ -158,6 +198,34 @@ export default {
 
             this.$refs.renderer.list.pageNo = 1; // 复位分页
             this.$refs.renderer.getData(); // 手动加载数据
-        }
+        },
+
+        /**
+         * 显示表单配置
+         *
+         * @returns
+         */
+        getFormConfig(): string {
+            let cfg: ListFactory_ListConfig = this.listCfg;
+
+            if (cfg.bindingForm && cfg.bindingForm.id)
+                return (cfg.bindingForm.name || "") + "#" + cfg.bindingForm.id;
+            else return "未绑定";
+        },
+
+        /**
+         * 选中表单配置之后
+         *
+         * @param formCfg
+         */
+        onFormSelected({ id, name }): void {
+            this.$refs.SelectForm.isShowListModal = false;
+
+            let cfg: ListFactory_ListConfig = this.listCfg;
+            cfg.bindingForm.id = id;
+            cfg.bindingForm.name = name;
+
+            this.$forceUpdate();
+        },
     }
 }
