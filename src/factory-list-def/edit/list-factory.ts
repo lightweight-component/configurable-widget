@@ -59,32 +59,22 @@ export default {
          * 创建 api-> 持久化
          */
         save(): void {
-            if (this.cfg.dataBinding.isCreateApi) {
-                let selectedTable: SelectedTable = this.selectedTable;
-                // let cfg = Object.assign({}, Config);
-                let cfg = Object.assign({}, {});
-
-                for (let i in cfg) {
-                    let item = cfg[i];
-
-                    if (item.sql)
-                        item.sql = item.sql.replace('${tableName}', selectedTable.tableName);
-                }
-            }
-
             if (!this.name) {
                 this.$Message.error('保存失败。请输入名称');
                 return;
             }
 
-            this.saveOrUpdate({
+            let def: ListFactory_ListConfig_New = {
+                page: Paging.NO_PAGE
+            };
+
+            let record: ConfigurableWidgetPO = {
                 name: this.name,
-                datasourceId: this.datasourceId,
-                datasourceName: this.datasourceName,
-                tableName: this.tableName,
-                type: 'LIST',
-                config: JSON.stringify(this.cfg, null, 1)
-            });
+                config: JSON.stringify(def, null, 1),
+                type: "LIST_DEF"
+            };
+
+            this.saveOrUpdate(record);
         },
 
         /**

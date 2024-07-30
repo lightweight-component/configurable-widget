@@ -86,7 +86,7 @@ declare type TableColumn = BaseCol & {
      * 可否搜索
      */
     canSearch?: boolean;
-    
+
     /**
      * 可否下拉筛选
      */
@@ -164,3 +164,50 @@ declare type ListFactory_ListConfig = {
         name: string;
     }
 };
+
+/**
+ * 分页类型
+ */
+enum Paging {
+    /**
+     * 不分页
+     */
+    NO_PAGE,
+
+    /**
+     * start/limit
+     */
+    START_LIMIT,
+
+    /**
+     * pageNo/pageSize
+     */
+    PAGE_NO
+}
+
+declare type ListFactory_ListConfig_New = {
+    page: Paging,
+
+    /**
+     * 各列配置
+     */
+    colConfig: TableColumn[],
+
+    /**
+    * 绑定的表单 id
+    */
+    bindingFormId: number
+}
+
+/**
+ * 对应数据库记录
+ */
+declare type ConfigurableWidgetPO = {
+    id?: number;
+
+    name: string;
+
+    config: string;
+
+    type: 'LIST' | 'FORM' | 'LIST_DEF'
+}

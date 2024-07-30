@@ -13,6 +13,7 @@
       <Form v-if="widgetType == 'formDef'" />
       <ListFactoryOld v-if="widgetType == 'listDef-old'" />
       <ListFactory v-if="widgetType == 'listDef'" />
+      <project ref="project" />
     </div>
   </Split>
 </template>
@@ -24,6 +25,7 @@ import Form from "./factory-form/list-form";
 import leftTree from "./tree/tree.vue";
 import user from "@ajaxjs/ui/dist/iam/user.vue";
 import aj from "@ajaxjs/ui/dist/";
+import project from "./project/project.vue";
 
 aj.IAM.getLoginInfo(window.config.loginUrl, window.config.thisPageUrl);
 
@@ -33,6 +35,7 @@ export default {
     ListFactoryOld,
     Form,
     leftTree,
+    project,
     user,
   },
   data() {

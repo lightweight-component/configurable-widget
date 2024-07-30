@@ -1,3 +1,4 @@
+<!-- 列表选择器 -->
 <template>
   <Modal v-model="isShowListModal" :title="'选择'+ title" ok-text="关闭" cancel-text="" width="800">
     <Row style="margin:20px 0;" type="flex" align="middle">
@@ -19,53 +20,57 @@
 
 <script>
 // import ListMixins from '../../widget/common-list-mixins';
-import ListMixins from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/list';
+import ListMixins from "@ajaxjs/ui/dist/iView-ext/fast-iview-table/list";
 
 export default {
   mixins: [ListMixins],
   props: {
     title: String,
-    columns: Array
+    columns: Array,
   },
   data() {
     return {
-       list: {
-          columns: [],
-          data: [],
-          total: 0,
-          start: 0,
-          limit: 9,
-          pageNo: 1,
-          pageSize: 9,
-          loading: false,
-          search: {
-              name: ''
-          },
+      list: {
+        columns: [],
+        data: [],
+        total: 0,
+        start: 0,
+        limit: 9,
+        pageNo: 1,
+        pageSize: 9,
+        loading: false,
+        search: {
+          name: "",
+        },
       },
       isShowListModal: false,
-      listColumns: []
-    }
+      listColumns: [],
+    };
   },
   mounted() {
     this.columns.forEach((item) => this.list.columns.push(item));
 
     let self = this;
     this.list.columns.push({
-      title: '选择',
+      title: "选择",
       width: 100,
       render: (h, params) => {
-        return h('a', {
-          on: {
-            'click': () => {
-              self.$emit('on-select', params.row);
-              // this.cfg.fields.splice(params.index, 1);
-            }
-          }
-        }, '选择');
-      }
+        return h(
+          "a",
+          {
+            on: {
+              click: () => {
+                self.$emit("on-select", params.row);
+                // this.cfg.fields.splice(params.index, 1);
+              },
+            },
+          },
+          "选择"
+        );
+      },
     });
 
     // this.getData();
-  }
-}
+  },
+};
 </script>

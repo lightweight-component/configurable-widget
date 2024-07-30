@@ -25,6 +25,7 @@ export default function (item: CheckableDataBaseColumnMeta, tableColumnData: Tab
         col.render = 'short_date';
 
     let name: string = item.name.toLowerCase();
+    
     if (name.indexOf('email') != -1)
         col.render = 'email';
 
