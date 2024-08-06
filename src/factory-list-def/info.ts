@@ -1,19 +1,20 @@
-import ListRenderer from '../renderer/list-factory-renderer.vue';
-import Fields2Cfg from '../renderer/fields-to-cfg';
-import CellRender from '../renderer/list-cell-render';
+import ListRenderer from './renderer/list-factory-renderer.vue';
+import Fields2Cfg from './renderer/fields-to-cfg';
+import CellRender from './renderer/list-cell-render';
 import MoreAttrib from './list-more-attrib.vue';
 // import Config from '../data-service/all-dml';
-import ConfigTable from '../../widget/config-table.vue';
-import InfoMixins from '../../widget/factory-info-common';
+import ConfigTable from '../widget/config-table.vue';
+import InfoMixins from '../widget/factory-info-common';
 import ListSelector from "./list-selector.vue";
-import FormPerviewLoader from "../../factory-form/loader/loader.vue";
-import FormFactoryMethod from "../../factory-form/edit/form-factory.vue";
+import FormPerviewLoader from "../factory-form/loader/loader.vue";
+import FormFactoryMethod from "../factory-form/edit/form-factory.vue";
+import FastTable from '../widget/fast-iview-table.vue';
 
 /**
  * 内页
  */
 export default {
-    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, FormPerviewLoader },
+    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, FormPerviewLoader,FastTable },
     mixins: [InfoMixins],
     data(): {} {
         let self: any = this;
@@ -40,6 +41,10 @@ export default {
                 actionButtons: [],
                 bindingForm: { id: 0, name: '' }
             } as ListFactory_ListConfig,
+
+            listDef: {
+                page: 1
+            } as ListFactory_ListConfig_New,
             formSelectorCols: [
                 { key: "id", title: "#", width: 60 },
                 { key: "name", title: "名称", minWidth: 80 },
@@ -85,7 +90,7 @@ export default {
          */
         getData(cb?: Function): void {
             let _cb: Function = (r: any) => {
-                this.cfg = r.config;
+                this.listDef = r.config;
                 setTimeout(() => cb && cb(), 100);
             };
 
@@ -104,13 +109,9 @@ export default {
                 return;
             }
 
-            let def: ListFactory_ListConfig_New = {
-                page: Paging.NO_PAGE
-            };
-
             let record: ConfigurableWidgetPO = {
                 name: this.name,
-                config: JSON.stringify(def, null, 1),
+                config: JSON.stringify(this.listDef, null, 1),
                 type: "LIST_DEF"
             };
 
@@ -169,30 +170,14 @@ export default {
             if (this.initTableData.length)
                 this.initTableData = [];
 
-            let listCfg: ListFactory_ListConfig = this.cfg;
-            let fields: TableColumn[] = listCfg.fields;
+            let listCfg: ListFactory_ListConfig_New = this.listDef;
+            let fields: TableColumn[] = listCfg.colConfig;
 
             fields.forEach((item: TableColumn) => { // 转换为 iView 的配置
                 if (item.isShow) {
                     let rendererColDef: iViewTableColumn = { title: item.title, key: item.key, width: item.width, minWidth: item.minWidth, align: item.align };
                     CellRender(rendererColDef, item);
                     this.rendererColDef.push(rendererColDef);
-                }
-            });
-
-            if (listCfg.actionButtons && listCfg.actionButtons.length)
-                this.rendererColDef.push({ title: '操 作', slot: 'action', align: 'center', fixed: 'right', width: 160 });
-
-            if (this.searchFields.length)// 定义哪些需要渲染搜索的
-                this.searchFields = [];
-
-            fields.forEach((item: TableColumn) => {
-                if (item.canSearch) {
-                    if (item.render == 'date' || item.render == 'short_date' || item.render == 'long_date') {
-                        this.searchFields.push({ name: item.key, field: item.title + '起始日期', type: 'date' });
-                        this.searchFields.push({ name: item.key, field: item.title + '结束日期', type: 'date' });
-                    } else
-                        this.searchFields.push({ name: item.key, field: item.title });
                 }
             });
 
@@ -206,10 +191,10 @@ export default {
          * @returns
          */
         getFormConfig(): string {
-            let cfg: ListFactory_ListConfig = this.listCfg;
+            let cfg: ListFactory_ListConfig_New = this.listDef;
 
-            if (cfg.bindingForm && cfg.bindingForm.id)
-                return (cfg.bindingForm.name || "") + "#" + cfg.bindingForm.id;
+            if (cfg && cfg.bindingFormId)
+                return (cfg.bindingFormId || "") + "#" + (cfg.bindingFormName || '');
             else return "未绑定";
         },
 
@@ -221,11 +206,21 @@ export default {
         onFormSelected({ id, name }): void {
             this.$refs.SelectForm.isShowListModal = false;
 
-            let cfg: ListFactory_ListConfig = this.listCfg;
-            cfg.bindingForm.id = id;
-            cfg.bindingForm.name = name;
+            let cfg: ListFactory_ListConfig_New = this.listDef;
+            cfg.bindingFormId = id;
+            cfg.bindingFormName = name;
 
             this.$forceUpdate();
         },
+
+        // @override
+        emptyData(): void {
+            this.name = '';
+            this.listDef = { page: 1, colConfig: [] };
+        },    
+        perview(): void {
+            this.$refs.listDefDemo.colDefId = this.id;
+            this.isShowPerview = true;
+        }
     }
 }

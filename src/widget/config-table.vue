@@ -7,7 +7,7 @@
         <span v-if="isEnableLivePerview">实时预览 </span>
 
         <i-Switch v-if="isEnableLivePerview" v-model="isShowLivePerview" class="rightMargin" />
-        <Button :disabled="isDisabled" class="rightMargin" icon="ios-eye" @click="$parent.doRenderer">预览</Button>
+        <Button :disabled="isDisabled" class="rightMargin" icon="ios-eye" @click="$parent.perview">预览</Button>
         <Button :disabled="isDisabled" icon="ios-create-outline" type="primary" @click="$parent.save">保存</Button>
       </span>
 

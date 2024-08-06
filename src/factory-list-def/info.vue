@@ -1,5 +1,5 @@
 <template>
-  <ConfigTable class="list-factory" :fields="cfg.fields">
+  <ConfigTable class="list-factory" :fields="listDef.colConfig">
     <template slot="table-header">
       <div class="input-width">渲染器</div>
       <div class="align">对齐方式</div>
@@ -69,14 +69,6 @@
       <FormDesigner :init-config-data="formConfigData()"></FormDesigner>
     </Modal> -->
 
-    <!--     <template slot="live-perview">
-      <Renderer ref="renderer_live_perview" :col="rendererColDef" :cfg="cfg" :initTableData="initTableData" :search-fields="searchFields"></Renderer>
-    </template> -->
-
-    <Modal v-model="isShowPerview" title="列表面板预览" cancel-text="" width="1500">
-      <ListRenderer ref="renderer" :col="rendererColDef" :cfg="cfg" :initTableData="initTableData" :search-fields="searchFields" />
-    </Modal>
-
     <template slot="config-panel">
      <!-- 详细配置 -->
     <Form :label-width="120" label-colon>
@@ -98,16 +90,22 @@
         <Button size="small" @click="$refs.SelectForm.isShowListModal = true">选择表单</Button>
       </FormItem>
 
-      <FormItem label="分页">
-        <Checkbox v-model="listCfg.isPage">是否分页
-          <i class="ivu-icon ivu-icon-ios-help-circle-outline" title="不分页则一次性查询所有数据，适合数据量较少的列表"></i>
-        </Checkbox>
-        分页参数：
-        <RadioGroup v-model="listCfg.page">
-          <Radio :label="1" :disabled="!listCfg.isPage">start/limit</Radio>
-          <Radio :label="2" :disabled="!listCfg.isPage">pageNo/pageSize</Radio>
+      <FormItem label="分页参数">
+        <RadioGroup v-model="listDef.page">
+          <Radio :label="0">不分页</Radio><i class="ivu-icon ivu-icon-ios-help-circle-outline" title="不分页则一次性查询所有数据，适合数据量较少的列表" />&nbsp;
+          <Radio :label="1">start/limit</Radio>
+          <Radio :label="2">pageNo/pageSize</Radio>
         </RadioGroup>
       </FormItem>
+
+      <fieldset class="hr">
+        <legend>API 接口</legend>
+      </fieldset>
+
+      <FormItem label="API 接口">
+        <Input v-model="listDef.httpApi" placeholder="API 接口，{project_prefix} 表示项目前缀" style="width:70%" />
+      </FormItem>
+
 
       <!-- 选择哪张表单绑定 -->
       <ListSelector ref="SelectForm" title="表单配置" :API="apiRoot + '/common_api/widget_config/list?q_type=LIST'" @on-select="onFormSelected($event)" :columns="formSelectorCols" />
@@ -116,22 +114,37 @@
     </Form>
     </template>
 
+    <Modal v-model="isShowPerview" title="预览" width="1200" ok-text="关闭" cancel-text="">
+        <FastTable ref="listDefDemo" :is-remote-col-def="true" />
+    </Modal>
+
     <template slot="more-attrib" slot-scope="scope">
       <MoreAttrib :row="scope.row" />
     </template>
   </ConfigTable>
 </template>
 
-<script lang="ts" src="./list-factory.ts"></script>
+<script lang="ts" src="./info.ts"></script>
 
 <style lang="less" scoped>
+fieldset.hr {
+   border:none;
+   width:90%;
+   margin:0 auto;
+   border-top: 1px solid lightgray;
+   
+  legend {
+    text-align:center;
+    padding:10px;
+  }
+}
 fieldset.panel {
   margin-top: 20px;
   border: 1px solid lightgray;
-  border-radius: 5px;
+
   padding: 10px 20px;
   legend {
-    margin-left: 8px;
+    text-align:center;
     letter-spacing: 5px;
   }
 }

@@ -18,6 +18,7 @@ export default {
     },
     mounted(): void {
         let id: string = this.$route.query.id;
+
         if (id) {
             this.id = Number(id);
             this.getData();
@@ -60,6 +61,18 @@ export default {
                     } else
                         this.$Message.warning(j.message);
                 }, valueObj);
+        },
+
+        /**
+         * 默认的清空数据方法，用于新建的状态。子类可以覆盖
+         */
+        emptyData(): void {
+            this.name = this.cfg.dataBinding.tableName = this.cfg.apiUrl = '';
+            this.cfg.fields = [];
+        },
+
+        perview(): void {
+
         }
     },
     watch: {
@@ -71,9 +84,10 @@ export default {
                 this.getData();
             } else {
                 // 新建
-                this.name = this.cfg.dataBinding.tableName = this.cfg.apiUrl = '';
-                this.cfg.fields = [];
+                this.emptyData();
             }
         },
     },
+
+
 }

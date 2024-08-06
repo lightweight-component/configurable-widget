@@ -6,7 +6,7 @@
         <Button type="primary" icon="ios-search" @click="$parent.getData()">查询</Button>
         <Button style="margin-left:10px" @click="reset">重置</Button>
       </span>
-      <Input suffix="ios-search" v-model="list.search.name" @on-enter="getData" clearable :placeholder="'请输入' + widgetName + '名称'" />
+      <Input suffix="ios-search" v-model="list.search.name" @on-enter="getData" clearable :placeholder="'请输入' + widgetName_ + '名称'" />
     </Card>
 
     <div>
@@ -17,10 +17,10 @@
           </Tooltip>
 
           <slot name="toolbar"></slot>
-          <Button type="primary" icon="md-add" @click="$router.push({ path: 'factory-list-info'})">新建{{widgetName}}</Button>
+          <Button v-if="!!onCreateBtn" type="primary" icon="md-add" @click="onCreateBtn">新建{{widgetName_}}</Button>
         </div>
 
-        <Table :columns="columnsDef" :data="list.data" :loading="list.loading" height="500">
+        <Table :columns="list.columns" :data="list.data" :loading="list.loading" height="500">
           <template slot-scope="{ row, index }" slot="action">
             <slot name="list_action" :item="row"></slot>
 

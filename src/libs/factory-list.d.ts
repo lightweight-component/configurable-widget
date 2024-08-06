@@ -186,6 +186,9 @@ enum Paging {
 }
 
 declare type ListFactory_ListConfig_New = {
+    /**
+     * 分页
+     */
     page: Paging,
 
     /**
@@ -193,10 +196,13 @@ declare type ListFactory_ListConfig_New = {
      */
     colConfig: TableColumn[],
 
+    httpApi: string,
+    
     /**
     * 绑定的表单 id
     */
-    bindingFormId: number
+    bindingFormId?: number,
+    bindingFormName?: stirng
 }
 
 /**
