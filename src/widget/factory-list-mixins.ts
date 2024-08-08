@@ -55,18 +55,6 @@ export default {
             if (this.list.search.name)
                 params.where = `name LIKE '%${this.list.search.name}%'`;
 
-            // 应用隔离
-            let dp_appId: string = window.sessionStorage.getItem('APP_ID');
-            if (dp_appId) {
-                let where: string = "appId='" + dp_appId + "'";
-
-                if (params.where) {
-                    params.where += " AND " + where;
-                } else {
-                    params.where = where;
-                }
-            }
-
             let api: string = `${this.API}/page`;
 
             if (this.listParams)

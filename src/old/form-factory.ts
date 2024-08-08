@@ -1,13 +1,13 @@
-import MoreAttrib from './form-more-attrib.vue';
-import FromRenderer from '../renderer/form-factory-renderer.vue';
-import FormPerviewLoader from '../loader/loader.vue';
+// import MoreAttrib from './form-more-attrib.vue';
+// import FromRenderer from '../renderer/form-factory-renderer.vue';
+// import FormPerviewLoader from '../loader/loader.vue';
 import ConfigTable from '../../widget/config-table.vue';
-import ConfigPanel from './form-config.vue';
+// import ConfigPanel from './form-config.vue';
 import InfoMixins from '../../widget/factory-info-common';
 import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
 
 export default {
-    components: { FromRenderer, FormPerviewLoader, ConfigTable, ConfigPanel, MoreAttrib },
+    components: {  ConfigTable },
     mixins: [InfoMixins],
     data(): {} {
         return {
@@ -94,6 +94,7 @@ export default {
         getData(): void {
             this.getDataBase((r: any) => {
                 this.cfg = r.config;
+                
                 if (this.cfg.jsonBased && this.cfg.jsonBased.isJsonBased)
                     this.view = 'form';
             });

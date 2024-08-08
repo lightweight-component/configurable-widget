@@ -82,17 +82,14 @@
 </template>
 
 <script>
-import HtmlEditor from '@ajaxjs/util/dist/widget/HtmlEditor/HtmlEditor';
+import HtmlEditor from "@ajaxjs/util/dist/widget/HtmlEditor/HtmlEditor";
 
 export default {
   components: { HtmlEditor },
   props: {
     item: { type: Object },
     data: Object,
-    status: Number
+    status: Number,
   },
-  mounted() {
-    // console.log(this.item);
-  }
 };
 </script>

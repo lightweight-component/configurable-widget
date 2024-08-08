@@ -24,16 +24,16 @@
       <Form :label-width="120" label-colon>
         <Divider size="small">获取记录接口</Divider>
 
-        <ApiBinding :cfg="cfg.dataBinding" />
+       <!--  <ApiBinding :cfg="cfg.dataBinding" /> -->
         <FormItem label="RESTful 创建/更新接口">
           <i-Switch v-model="cfg.isRESTful_writeApi" />
         </FormItem>
 
         <Divider size="small">更新记录接口</Divider>
-        <ApiBinding :cfg="cfg.updateApi" />
+      <!--   <ApiBinding :cfg="cfg.updateApi" /> -->
 
         <Divider size="small" v-if="cfg.isRESTful_writeApi">创建记录接口</Divider>
-        <ApiBinding v-if="!cfg.isRESTful_writeApi" :cfg="cfg.createApi" />
+     <!--    <ApiBinding v-if="!cfg.isRESTful_writeApi" :cfg="cfg.createApi" /> -->
       </Form>
     </TabPane>
 
@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts">
-import ListSelector from "../../factory-list/edit/list-selector.vue";
+import ListSelector from "../../list/list-selector.vue";
 // import ApiBinding from "../../widget/api-binding.vue";
 
 export default {

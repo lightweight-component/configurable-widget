@@ -1,7 +1,7 @@
 <template>
   <ConfigTable class="form-factory" :fields="cfg.fields" is-enable-live-perview>
     <template slot="topbar">
-      <a @click="jsonBased.isShowJsonBased = true">从 JSON 新建</a> | <a @click="view = 'model'" :class="{selected : view == 'model'}">模型视图</a> | <a @click="view = 'form'" :class="{selected : view == 'form'}">表单视图</a> |
+      <a @click="jsonBased.isShowJsonBased = true">从JSON新建</a> | 视图：<a @click="view = 'model'" :class="{selected : view == 'model'}">模型</a> | <a @click="view = 'form'" :class="{selected : view == 'form'}">表单</a> |
     </template>
 
     <template slot="table-header">
@@ -106,7 +106,7 @@
           <Option :value="3">三列</Option>
         </Select>
       </div>
-      
+
       <div class="input-width-small" :class="{hide: view != 'form'}">
         <Select size="small" v-model="scope.item.jsonType" transfer>
           <Option value="string">文本</Option>
@@ -125,35 +125,56 @@
       </div>
     </template>
 
-    <FormPerviewLoader ref="FormPerviewLoader" />
-
     <template slot="live-perview">
-      <FromRenderer ref="FromRenderer" :cfg="cfg" :fields="cfg.fields" />
+      <FormLoader ref="FromRenderer" :form-id="id" :cfg="cfg" :is_show_btns="false" />
     </template>
 
     <template slot="config-panel">
-      <ConfigPanel :cfg="cfg" :api-root="apiRoot" />
+      <ConfigPanel :cfg="cfg" :api-root="API" />
     </template>
 
     <template slot="more-attrib" slot-scope="scope">
       <MoreAttrib v-if="scope.row && scope.row.ext_attribs " :row="scope.row" />
     </template>
-    
+
     <Modal v-model="jsonBased.isShowJsonBased" title="根据 JSON 定义创建表单" width="650" @on-ok="parseJsonBased">
-      <p style="margin-top:0;">先输入接口地址，按“下载”获取 JSON</p>
-      <Input type="text" v-model="cfg.dataBinding.url" style="width:520px" size="small" /> <Button size="small" @click="downloadJson">下载</Button>
-      <p>或者直接粘贴 JSON 也可以</p>
       <Input type="textarea" v-model="jsonBased.jsonStr" :rows="15" style="width:86%;" />
       <p>JSON 为多层结构，须指定某个对象，这里指定一个字段</p>
       <!-- <Input type="text" v-model="cfg.jsonBased.key" style="width:86%;" size="small" placeholder="JSON 里面的某个 key，如 foo.bar.xyz" /> -->
     </Modal>
-  </ConfigTable>
 
+    <Modal v-model="isShowPerview" title="预览" width="800" ok-text="关闭" cancel-text="">
+        <FormLoader ref="preview" :form-id="id" :cfg="cfg" />
+    </Modal>
+  </ConfigTable>
 </template>
 
-<script lang="ts" src="./form-factory.ts"></script>
+<script lang="ts" src="./info.ts"></script>
 
-<style lang="less">
+<style lang="less" scoped>
+fieldset.hr {
+  border: none;
+  width: 90%;
+  margin: 0 auto;
+  border-top: 1px solid lightgray;
+
+  legend {
+    text-align: center;
+    padding: 10px;
+  }
+}
+
+fieldset.panel {
+  margin-top: 20px;
+  border: 1px solid lightgray;
+
+  padding: 10px 20px;
+  legend {
+    text-align: center;
+    letter-spacing: 5px;
+  }
+}
+
 .form-factory {
   margin: 10px auto;
   width: 98%;

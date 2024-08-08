@@ -74,25 +74,8 @@ export default {
                     let base: any = { title: '表单定义', contextmenu: false, parentNode: projectTreeNode.projectData, render: renderCrudTreeNode };
                     let data = [
                         { ...base, title: "表单定义" },
-                        { ...base, title: "列表定义" },
-                        { ...base, title: "列表定义-旧版" },
+                        { ...base, title: "列表定义" }
                     ];
-
-                    // 添加 iView 树节点的字段
-                    // j.data.forEach((item) => {
-                    //     let title: string = item.name || item.namespace;
-                    //     let id: string = projectTreeNode.title + ':' + item.namespace;
-                    //     let node: DS_TreeNode_Service = {
-                    //         title: title+'00000',
-                    //         contextmenu: false,
-                    //         data: item,
-                    //         id: id,
-                    //         parentNode: projectTreeNode.projectData,
-                    //         render: renderCrudTreeNode
-                    //     };
-
-                    //     data.push(node);
-                    // });
 
                     projectTreeNode.children = data;
                 }
@@ -117,11 +100,6 @@ const renderCrudTreeNode = (h: Function, { root, node, data }) => {
     else if (data.title == '列表定义')
         return [
             h("span", { class: "http-method get" }, 'L'),
-            h("span", data.title),
-        ];
-    else if (data.title == '列表定义-旧版')
-        return [
-            h("span", { class: "http-method delete" }, 'O'),
             h("span", data.title),
         ];
 };

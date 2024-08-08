@@ -60,20 +60,17 @@ export default {
 
         return this.$createElement('Form', {
             ref: 'formDynamic',
-            props: {
-                 'label-width': this.cfg.labelWidth || 80, 'label-colon': this.status === 0
-            }
+            props: {'label-width': this.cfg.labelWidth || 80, 'label-colon': this.status === 0 }
         }, arr);
     },
 
     methods: {
         handleSubmit(name) {
             this.$refs[name].validate((valid) => {
-                if (valid) {
+                if (valid) 
                     this.$Message.success('Success!');
-                } else {
+                 else 
                     this.$Message.error('Fail!');
-                }
             });
         },
 

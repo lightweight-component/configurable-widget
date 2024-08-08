@@ -43,7 +43,22 @@ export default {
                     this.$Message.warning('获取配置失败');
             });
         },
-        saveOrUpdate(valueObj: any): void {
+
+        /**
+         * 创建 api-> 持久化
+         */
+        saveOrUpdate(config: any, type: string): void {
+            if (!this.name) {
+                this.$Message.error('保存失败。请输入名称');
+                return;
+            }
+
+            let valueObj: ConfigurableWidgetPO = {
+                name: this.name,
+                config: JSON.stringify(config, null, 1),
+                type
+            };
+
             if (this.id) {
                 valueObj.id = this.id;
 

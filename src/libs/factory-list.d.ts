@@ -197,7 +197,7 @@ declare type ListFactory_ListConfig_New = {
     colConfig: TableColumn[],
 
     httpApi: string,
-    
+
     /**
     * 绑定的表单 id
     */
@@ -215,5 +215,6 @@ declare type ConfigurableWidgetPO = {
 
     config: string;
 
-    type: 'LIST' | 'FORM' | 'LIST_DEF'
+    // type: 'LIST' | 'FORM' | 'LIST_DEF' | 'FORM_DEF'
+    type: string
 }

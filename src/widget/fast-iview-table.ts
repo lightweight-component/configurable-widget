@@ -1,5 +1,10 @@
 import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
-import CellRender from '../factory-list-def/renderer/list-cell-render';
+import CellRender from '../list/renderer/list-cell-render';
+
+// 声明 window.config 并为其指定类型
+declare const window: Window & {
+    config: ConfigInterface;
+};
 
 export default {
     props: {
@@ -7,7 +12,8 @@ export default {
         apiUrl: { type: String, required: false },  // 接口地址
         columnsDef: { type: Array, required: false },  // 列定义
         listApiUrl: { type: String, required: false },
-        onCreateBtn: { type: Function, required: false },
+        createRoute: { type: String, required: false },     // 新建事件触发时候，进入的路由地址
+        editRoute: { type: String, required: false },       // 编辑事件触发时候，进入的路由地址
         isRemoteColDef: { type: Boolean, required: false, default: false }
         // colDefId: { type: Number, required: false }
     },
@@ -98,6 +104,33 @@ export default {
 
             this.getData();
         },
+
+        /**
+         * 新建
+         */
+        onCreate(id: number): void {
+            if (this.createRoute)
+                this.$router.push({ path: this.createRoute }); // 进入详情页，采用相对路径
+            else {
+                if (!this.$parent.onCreate)
+                    throw '请设置父组件的 onCreate 事件处理器';
+
+                this.$parent.edit(id);
+            }
+        },
+        /**
+         * 编辑
+         */
+        onEdit(id: number): void {
+            if (this.editRoute)
+                this.$router.push({ path: this.editRoute, query: { id } }); // 进入详情页，采用相对路径
+            else {
+                if (!this.$parent.onEdit)
+                    throw '请设置父组件的 onEdit 事件处理器';
+
+                this.$parent.edit(id);
+            }
+        }
     },
     watch: {
         /**

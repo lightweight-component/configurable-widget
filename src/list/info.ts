@@ -2,19 +2,17 @@ import ListRenderer from './renderer/list-factory-renderer.vue';
 import Fields2Cfg from './renderer/fields-to-cfg';
 import CellRender from './renderer/list-cell-render';
 import MoreAttrib from './list-more-attrib.vue';
-// import Config from '../data-service/all-dml';
+import ListSelector from "./list-selector.vue";
+// import FormFactoryMethod from "../factory-form/edit/form-factory.vue";
 import ConfigTable from '../widget/config-table.vue';
 import InfoMixins from '../widget/factory-info-common';
-import ListSelector from "./list-selector.vue";
-import FormPerviewLoader from "../factory-form/loader/loader.vue";
-import FormFactoryMethod from "../factory-form/edit/form-factory.vue";
 import FastTable from '../widget/fast-iview-table.vue';
 
 /**
  * 内页
  */
 export default {
-    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, FormPerviewLoader,FastTable },
+    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, FastTable },
     mixins: [InfoMixins],
     data(): {} {
         let self: any = this;
@@ -88,34 +86,14 @@ export default {
         /**
          * 获取单个数据
          */
-        getData(cb?: Function): void {
-            let _cb: Function = (r: any) => {
-                this.listDef = r.config;
-                setTimeout(() => cb && cb(), 100);
-            };
+        getData(): void {
+            let _cb: Function = (r: any) => this.listDef = r.config;
 
-            if (this.getDataBase)
-                this.getDataBase(_cb);
-            else
-                InfoMixins.methods.getDataBase.call(this, _cb);
+            this.getDataBase(_cb);
         },
 
-        /**
-         * 创建 api-> 持久化
-         */
         save(): void {
-            if (!this.name) {
-                this.$Message.error('保存失败。请输入名称');
-                return;
-            }
-
-            let record: ConfigurableWidgetPO = {
-                name: this.name,
-                config: JSON.stringify(this.listDef, null, 1),
-                type: "LIST_DEF"
-            };
-
-            this.saveOrUpdate(record);
+            this.saveOrUpdate(this.listDef, 'LIST_DEF');
         },
 
         /**
@@ -217,7 +195,7 @@ export default {
         emptyData(): void {
             this.name = '';
             this.listDef = { page: 1, colConfig: [] };
-        },    
+        },
         perview(): void {
             this.$refs.listDefDemo.colDefId = this.id;
             this.isShowPerview = true;

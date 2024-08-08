@@ -1,6 +1,6 @@
 import ListRenderer from '../renderer/list-factory-renderer.vue';
-import Fields2Cfg from '../renderer/fields-to-cfg';
-import CellRender from '../renderer/list-cell-render';
+// import Fields2Cfg from '../renderer/fields-to-cfg';
+// import CellRender from '../renderer/list-cell-render';
 import ConfigPanel from './list-config.vue';
 import MoreAttrib from './list-more-attrib.vue';
 // import Config from '../data-service/all-dml';
@@ -40,52 +40,7 @@ export default {
     },
 
     methods: {
-        /**
-         * 获取单个数据
-         */
-        getData(cb?: Function): void {
-            let _cb: Function = (r: any) => {
-                this.cfg = r.config;
-                setTimeout(() => cb && cb(), 100);
-            };
-
-            if (this.getDataBase)
-                this.getDataBase(_cb);
-            else
-                InfoMixins.methods.getDataBase.call(this, _cb);
-        },
-
-        /**
-         * 创建 api-> 持久化
-         */
-        save(): void {
-            if (this.cfg.dataBinding.isCreateApi) {
-                let selectedTable: SelectedTable = this.selectedTable;
-                // let cfg = Object.assign({}, Config);
-                let cfg = Object.assign({}, {});
-
-                for (let i in cfg) {
-                    let item = cfg[i];
-
-                    if (item.sql)
-                        item.sql = item.sql.replace('${tableName}', selectedTable.tableName);
-                }
-            }
-
-            if (!this.name) {
-                this.$Message.error('保存失败。请输入名称');
-                return;
-            }
-
-            this.saveOrUpdate({
-                name: this.name,
-                datasourceId: this.datasourceId,
-                datasourceName: this.datasourceName,
-                tableName: this.tableName,
-                type: 'LIST',
-                config: JSON.stringify(this.cfg, null, 1)
-            });
-        },
+  
 
         /**
          * 新增

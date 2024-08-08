@@ -3,25 +3,24 @@
     <div slot="left" class="split-pane-left">
       <leftTree ref="leftTreeCmp" />
     </div>
+
     <div slot="right" class="split-pane-right">
       <div class="header">
         <user />
         <h1 v-if="widgetType == 'listDef'">列表定义</h1>
         <h1 v-if="widgetType == 'formDef'">表单定义</h1>
-        <h1 v-if="widgetType == 'listDef-old'">列表定义（旧版）</h1>
       </div>
+
+      <list v-if="widgetType == 'listDef'" />
       <Form v-if="widgetType == 'formDef'" />
-      <ListFactoryOld v-if="widgetType == 'listDef-old'" />
-      <ListFactory v-if="widgetType == 'listDef'" />
       <project ref="project" />
     </div>
   </Split>
 </template>
 
 <script>
-import ListFactory from "./factory-list-def/list";
-import ListFactoryOld from "./factory-list/list";
-import Form from "./factory-form/list-form";
+import List from "./list/list";
+import Form from "./form/list";
 import leftTree from "./tree/tree.vue";
 import user from "@ajaxjs/ui/dist/iam/user.vue";
 import aj from "@ajaxjs/ui/dist/";
@@ -31,8 +30,7 @@ aj.IAM.getLoginInfo(window.config.loginUrl, window.config.thisPageUrl);
 
 export default {
   components: {
-    ListFactory,
-    ListFactoryOld,
+    List,
     Form,
     leftTree,
     project,
@@ -53,17 +51,12 @@ export default {
         case "列表定义":
           this.widgetType = "listDef";
           break;
-        case "列表定义-旧版":
-          this.widgetType = "listDef-old";
-          break;
       }
-    },
-    open(route) {
-      window.open("#/" + route);
     },
   },
 };
 </script>
+
 <style lang="less" scoped>
 .header {
   line-height: 260%;

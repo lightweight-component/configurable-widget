@@ -11,20 +11,20 @@
 
     <div>
       <Card :bordered="false" dis-hover>
-        <div style="margin-bottom:20px;">
-          <Tooltip class="ivu-ml" content="刷新" placement="top" style="float:right;padding-top:10px;">
+        <div class="toolbar">
+          <Tooltip class="ivu-ml" content="刷新" placement="top">
             <Icon size="20" type="ios-refresh" @click="getData" style="cursor: pointer;" />
           </Tooltip>
 
           <slot name="toolbar"></slot>
-          <Button v-if="!!onCreateBtn" type="primary" icon="md-add" @click="onCreateBtn">新建{{widgetName_}}</Button>
+          <Button v-if="!!createRoute || !! $parent.onCreate" type="primary" icon="md-add" @click="onCreate">新建{{widgetName_}}</Button>
         </div>
 
         <Table :columns="list.columns" :data="list.data" :loading="list.loading" height="500">
           <template slot-scope="{ row, index }" slot="action">
             <slot name="list_action" :item="row"></slot>
 
-            <a style="color:green;" @click="$parent.goInfo(row.id, 'factory-list-info-new')">编辑</a>
+            <a style="color:green;" @click="onEdit(row.id)">编辑</a>
             <Divider type="vertical" />
             <Poptip confirm transfer title="是否要删除此行？" @on-ok="deleteInfo(row.id, index)">
               <a style="color:red;">删除</a>
@@ -39,6 +39,16 @@
 </template>
 
 <style scoped>
+.toolbar {
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.toolbar .ivu-ml {
+  float: right;
+  padding-top: 10px;
+}
+
 /* 分页控件有点问题，修改下 */
 .ivu-mt.ivu-text-right {
   text-align: right;

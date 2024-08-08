@@ -86,30 +86,32 @@
 
 <script>
 import draggable from "vuedraggable";
-import DataModelSelector from './data-model-selector/index.vue';
+import DataModelSelector from "./data-model-selector/index.vue";
 // import ApiSelector from './api-selector/index.vue';
 
 export default {
   // components: { draggable, DataModelSelector, ApiSelector },
   components: { draggable, DataModelSelector },
   props: {
-    columns: Array, fields: Array, isEnableLivePerview: Boolean
+    columns: Array,
+    fields: Array,
+    isEnableLivePerview: Boolean,
   },
   data() {
     return {
       apiRoot: window.config.dsApiRoot,
       isShowLivePerview: false,
       isShowMoreConfig: false,
-      isShowMoreAttrib: false,// 是否显示更多的配置（某个属性的）
+      isShowMoreAttrib: false, // 是否显示更多的配置（某个属性的）
       isShowFieldsSelect: false,
       isShowApiSelect: false,
-      currentRow: {}
+      currentRow: {},
     };
   },
   computed: {
     isDisabled() {
-      return !this.$parent.cfg.fields.length;
-    }
+      return this.$parent.cfg.fields && !this.$parent.cfg.fields.length;
+    },
   },
   methods: {
     /**
@@ -129,8 +131,8 @@ export default {
     //     this.$el.query
     //   }
     // }
-  }
-}
+  },
+};
 </script>
 
 <style lang="less" src="./config-table.less"></style>
