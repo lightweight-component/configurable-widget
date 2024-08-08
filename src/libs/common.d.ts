@@ -33,31 +33,6 @@ declare interface RepsonseResult {
     total?: number;
 }
 
-/**
- * JSON 接口返回的通用
- */
-type JsonResponse = {
-    /**
-     * 1 = 成功，0 = 失败
-     */
-    status: number;
-
-    /**
-     * 信息
-     */
-    message: string;
-
-    /**
-     * 分页的总数
-     */
-    total?: number;
-
-    /**
-     * 返回数据
-     */
-    data: any;
-};
-
 // 官方 API 还没提供，自己写一个
 interface FileReaderEventTarget extends EventTarget {
     result: string
@@ -77,13 +52,6 @@ declare type JsonParam = { [key: string]: string | number | boolean | JsonParam 
  * key 和 value 都是 string 类型的 JSON 实体
  */
 declare type StringJsonParam = { [key: string]: string };
-
-/*
- * 公共类型
- */
-
-declare type ManagedWidget = {
-};
 
 /**
  * 按钮事件
@@ -198,4 +166,36 @@ declare type Model = BaseModel & {
      * 是否跨表字段
      */
     isCrossTable?: boolean;
+};
+
+type Entity = {
+    /**
+     * 类型
+     */
+    type: string;
+
+    /**
+     * 数据长度
+     */
+    width: number;
+
+    /**
+     * 是否允许为空
+     */
+    isNotNull: boolean;
+
+    /**
+     * 默认值
+     */
+    defaultValue: any;
+
+    /**
+     * 校验规则
+     */
+    regexp: RegExp;
+
+    /**
+     * 注释说明
+     */
+    comment: string;
 };

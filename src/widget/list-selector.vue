@@ -3,7 +3,7 @@
   <Modal v-model="isShowListModal" :title="'选择'+ title" ok-text="关闭" cancel-text="" width="800">
     <Row style="margin:20px 0;" type="flex" align="middle">
       <Col span="12">
-      <Input search enter-button placeholder="按名称模糊搜索" ref="inputEl" />
+        <Input search enter-button placeholder="按名称模糊搜索" ref="inputEl" />
       </Col>
       <Col span="12">
       &nbsp;&nbsp;&nbsp;<a>重置</a>

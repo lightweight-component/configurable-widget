@@ -7,6 +7,7 @@
       <Icon :type="value" />
     </div>
     </Input>
+
     <Modal class="modal-icons" v-model="modal" title="选择图标" width="800" @on-cancel="cancel">
       <div>
         <Input v-model="iconName" suffix="ios-search" placeholder="请输入图标名称" style="width: 100%" @on-change="filterIcons" />
@@ -25,6 +26,7 @@
           </Row>
         </ul>
       </div>
+
       <div slot="footer">
         <Button @click="cancel">取消</Button>
       </div>
@@ -90,6 +92,7 @@ export default {
   },
 };
 </script>
+
 <style lang="less" scoped>
 .icons {
   /deep/.ivu-input-group-prepend {
@@ -97,15 +100,18 @@ export default {
     cursor: pointer;
   }
 }
+
 .modal-icons {
   .icon-list {
     height: 450px;
     margin-top: 16px;
     overflow-y: scroll;
   }
+
   .list-items {
     cursor: pointer;
   }
+
   /deep/.ivu-modal-wrap {
     display: flex;
     align-items: center;
