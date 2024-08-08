@@ -11,7 +11,6 @@ interface ConfigInterface {
     thisPageUrl: string;
 }
 
-
 /**
  * 项目
  */
