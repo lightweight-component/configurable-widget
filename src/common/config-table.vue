@@ -86,11 +86,10 @@
 
 <script>
 import draggable from "vuedraggable";
-import DataModelSelector from "./data-model-selector/index.vue";
+import DataModelSelector from "../widget/data-model-selector/index.vue";
 // import ApiSelector from './api-selector/index.vue';
 
 export default {
-  // components: { draggable, DataModelSelector, ApiSelector },
   components: { draggable, DataModelSelector },
   props: {
     columns: Array,
@@ -126,11 +125,6 @@ export default {
     fields(n) {
       this.$parent.cfg.fields = n;
     },
-    // isShowLivePerview(n) {
-    //   if(n) {
-    //     this.$el.query
-    //   }
-    // }
   },
 };
 </script>

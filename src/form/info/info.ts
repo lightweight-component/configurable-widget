@@ -1,8 +1,8 @@
 import FormLoader from "../form-loader.vue";
 import MoreAttrib from './form-more-attrib.vue';
 import ConfigPanel from './form-config.vue';
-import ConfigTable from '../../widget/config-table.vue';
-import InfoMixins from '../../widget/factory-info-common';
+import ConfigTable from '../../common/config-table.vue';
+import InfoMixins from '../../common/info-common';
 import FastTable from '../../widget/fast-iview-table.vue';
 
 /**

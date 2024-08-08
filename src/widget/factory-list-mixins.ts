@@ -1,5 +1,5 @@
 import List from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/list';
-import { xhr_get,xhr_del } from '@ajaxjs/util/dist/util/xhr';
+import { xhr_get, xhr_del } from '@ajaxjs/util/dist/util/xhr';
 
 /**
  * 组件生成器公用
@@ -21,24 +21,6 @@ export default {
     },
 
     methods: {
-        /**
-         * 创建新记录
-         */
-        createNew(): void {
-            let cfg: any = this.$refs.WidgetFactory.cfg;
-            cfg.name = cfg.dataBinding.tableName = cfg.dataBinding.url = '';
-            cfg.fields = [];
-
-            this.isShowEdit = true;
-        },
-
-        openInfo(row: any): void {
-            this.perview.title = row.name;
-            this.$refs.WidgetFactory.cfg.id = row.id;
-            this.$refs.WidgetFactory.getData();
-            setTimeout(() => this.isShowEdit = true, 300);
-        },
-
         deleteInfo(id: number, index: number): void {
             this.list.loading = true;
             xhr_del(`${this.API}/${id}`, List.afterDelete(() => {
@@ -71,39 +53,5 @@ export default {
             }, params);
         },
 
-        // 要覆盖这个方法
-        rawVoToConfig(vo: any): any {
-            // alert(vo);
-        },
-
-        /**
-         * 预览
-         * 
-         * @param row 
-         */
-        openDemo(row: any): void {
-            if (this.$refs.FormLoader && this.$refs.FormLoader.$refs.FromRenderer)
-                this.$refs.FormLoader.$refs.FromRenderer.data = {}; // 清除之前的数据
-
-            xhr_get(`${this.API}/${row.id}`, (j: RepsonseResult) => {
-                let r: any = j.data;
-
-                if (r) {
-                    this.perview.title = row.name;
-                    this.perview.isShow = true;
-                    this.perview.data = this.rawVoToConfig(r); // 数据库记录转换到 配置对象;
-                } else {
-                    this.$Message.error('未有任何配置');
-                    this.perview.data = {};
-                }
-            });
-        },
-
-        /**
-         * 进入详情页，采用相对路径
-         */
-        goInfo(id: Number, path: string): void {
-            this.$router.push({ path: path, query: { id: id } });
-        }
     }
 };

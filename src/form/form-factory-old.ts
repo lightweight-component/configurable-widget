@@ -3,125 +3,13 @@
 // import FormPerviewLoader from '../loader/loader.vue';
 import ConfigTable from '../../widget/config-table.vue';
 // import ConfigPanel from './form-config.vue';
-import InfoMixins from '../../widget/factory-info-common';
+import InfoMixins from '../../common/info-common';
 import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
 
 export default {
-    components: {  ConfigTable },
+    components: { ConfigTable },
     mixins: [InfoMixins],
-    data(): {} {
-        return {
-            API: this.api || `${this.apiRoot}/common_api/widget_config`,
-            cfg: {
-                labelWidth: 80,
-                dataBinding: {
-                    httpMethod: 'GET',
-                    url: "",
-                    beforeRequest: '',
-                    baseParams: ''
-                },
-                updateApi: {
-                    httpMethod: 'POST',
-                    url: "",
-                    beforeRequest: '',
-                    baseParams: ''
-                },
-                jsonBased: {
-                    isJsonBased: false,
-                    key: 'FOO',
-                },
-                isShowBtns: true,
-                fields: []
-            } as FormFactory_Config,
-            loadFormId: 0,
-            extraDataOnSave: {},// 调用者额外想送入的数据
-            list: {
-                columns: [
-                    { title: '显示', slot: 'isShow', align: 'center', width: 45 },
-                    {
-                        title: '字段 name', minWidth: 130, align: 'center', render: (h: Function, params: any) => {
-                            return h('Input', {
-                                props: { type: 'text', placeholder: 'name 必填', value: this.cfg.fields[params.index].name },
-                                on: {
-                                    'on-blur': (event: any) => {
-                                        if (event.target.value)
-                                            this.cfg.fields[params.index].name = event.target.value;
-                                    },
-                                },
-                            });
-                        }
-                    },
-                    { title: '名称 label', slot: 'uiLabel', align: 'center', minWidth: 130 },
-                    { title: 'UI 类型', slot: 'uiType', align: 'center', width: 150 },
-                    { title: 'UI 布局', slot: 'uiLayout', align: 'center', width: 80 },
-                    { title: '数据类型', slot: 'dataType', align: 'center', width: 100 },
-                    { title: '数据长度', slot: 'dataWidth', align: 'center', width: 80 },
-                    { title: '必填', slot: 'isNull', align: 'center', width: 45 },
-                    { title: '默认值', slot: 'defaultValue', align: 'center', minWidth: 130 },
-                    // { title: '枚举值', slot: 'emuValue', align: 'center', width: 150 },
-                    { title: '正则验证', slot: 'regexp', align: 'center', width: 150 },
-                    { title: '验证提示', slot: 'validMsg', align: 'center', width: 150 },
-                    { title: '操作', slot: 'action', align: 'center', minWidth: 100 }
-                ]
-            } as TableListConfig,
-            view: 'model', // 视图 model | form
-            jsonBased: {
-                isShowJsonBased: false, // 从 JSON  新建
-                jsonStr: `{
-    "clientShortName": "TEST",
-    "FOO": {
-        "NUMBER": 1221,
-        "STR": "BAR22",
-        "BOOLEAN": true,
-        "NULL": null,
-        "ARRAY": [
-            1,
-            "STR",
-            null
-        ],
-        "OBJ":{
-            "ZXY": "DD"
-        }
-    }
-}`,
-            }
-        };
-    },
     methods: {
-        /**
-         * 获取单个数据
-         */
-        getData(): void {
-            this.getDataBase((r: any) => {
-                this.cfg = r.config;
-                
-                if (this.cfg.jsonBased && this.cfg.jsonBased.isJsonBased)
-                    this.view = 'form';
-            });
-        },
-
-        save(): void {
-            if (!this.name) {
-                this.$Message.warning('保存失败。请填写表单名称');
-                return;
-            }
-
-            let cfg: FormFactory_Config = this.cfg;
-            let valueObj: any = {
-                name: this.name,
-                datasourceId: this.datasourceId,
-                datasourceName: this.datasourceName,
-                tableName: this.tableName,
-                config: JSON.stringify(cfg, null, 2),
-                type: 'FORM'
-            };
-
-            if (this.extraDataOnSave) // 额外的数据
-                Object.assign(valueObj, this.extraDataOnSave);
-
-            this.saveOrUpdate(valueObj);
-        },
-
         /**
          * 新增l
          */

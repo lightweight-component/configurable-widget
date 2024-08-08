@@ -36,47 +36,48 @@
 // import fontName from '@bingo/iview-pro-style/style/fonts/iconname.js'
 
 export default {
-  name: 'compIcons',
+  name: "compIcons",
   props: {
     data: {
       type: String,
-      default: ''
+      default: "",
     },
     placeholder: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   data() {
     return {
-      value: '',
+      value: "",
       // iconList: fontName,
       iconList: [],
       modal: false,
-      iconName: ''
-    }
+      iconName: "",
+    };
   },
   watch: {
     data(val, old) {
       this.value = this.data;
-    }
+    },
   },
   methods: {
     filterIcons(e) {
       this.iconList = fontName;
       if (e.target.value) {
-        this.iconList = this.iconList.filter(item => item.includes(e.target.value))
+        this.iconList = this.iconList.filter((item) =>
+          item.includes(e.target.value)
+        );
       }
-
     },
     selectedIcon(name) {
       this.modal = false;
       this.value = name;
-      this.iconName = '';
-      this.$emit('onChange', name);
+      this.iconName = "";
+      this.$emit("onChange", name);
     },
     onChange(event) {
-      this.$emit('onChange', event.target.value);
+      this.$emit("onChange", event.target.value);
     },
     handleIcons() {
       this.iconList = fontName;
@@ -84,34 +85,34 @@ export default {
     },
     cancel() {
       this.modal = false;
-      this.iconName = '';
-    }
-  }
-}
+      this.iconName = "";
+    },
+  },
+};
 </script>
 <style lang="less" scoped>
 .icons {
-    /deep/.ivu-input-group-prepend {
-        width: 40px;
-        cursor: pointer;
-    }
+  /deep/.ivu-input-group-prepend {
+    width: 40px;
+    cursor: pointer;
+  }
 }
 .modal-icons {
-    .icon-list {
-        height: 450px;
-        margin-top: 16px;
-        overflow-y: scroll;
+  .icon-list {
+    height: 450px;
+    margin-top: 16px;
+    overflow-y: scroll;
+  }
+  .list-items {
+    cursor: pointer;
+  }
+  /deep/.ivu-modal-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .ivu-modal {
+      top: 0;
     }
-    .list-items {
-        cursor: pointer;
-    }
-    /deep/.ivu-modal-wrap {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        .ivu-modal {
-            top: 0;
-        }
-    }
+  }
 }
 </style>

@@ -19,7 +19,6 @@
 </template>
 
 <script>
-// import ListMixins from '../../widget/common-list-mixins';
 import ListMixins from "@ajaxjs/ui/dist/iView-ext/fast-iview-table/list";
 
 export default {

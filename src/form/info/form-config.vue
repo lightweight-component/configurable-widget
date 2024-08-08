@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts">
-import ListSelector from "../../list/list-selector.vue";
+import ListSelector from "../../widget/list-selector.vue";
 // import ApiBinding from "../../widget/api-binding.vue";
 
 export default {

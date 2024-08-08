@@ -2,10 +2,10 @@ import ListRenderer from './renderer/list-factory-renderer.vue';
 import Fields2Cfg from './renderer/fields-to-cfg';
 import CellRender from './renderer/list-cell-render';
 import MoreAttrib from './list-more-attrib.vue';
-import ListSelector from "./list-selector.vue";
+import ListSelector from "../widget/list-selector.vue";
 // import FormFactoryMethod from "../factory-form/edit/form-factory.vue";
-import ConfigTable from '../widget/config-table.vue';
-import InfoMixins from '../widget/factory-info-common';
+import ConfigTable from '../common/config-table.vue';
+import InfoMixins from '../common/info-common';
 import FastTable from '../widget/fast-iview-table.vue';
 
 /**
