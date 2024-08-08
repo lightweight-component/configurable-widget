@@ -9,17 +9,6 @@ export default {
         apiRoot: { type: String, required: false },   // 接口前缀。与 完整的 API 地址 二选一
         api: { type: String, required: false }       // 完整的 API 地址。与 接口前缀 二选一
     },
-    data() {
-        return {
-            isShowEdit: false,  // 编辑
-            perview: {          // 预览
-                isShow: false,
-                title: '',
-                data: {},        // 配置对象
-            }
-        };
-    },
-
     methods: {
         deleteInfo(id: number, index: number): void {
             this.list.loading = true;

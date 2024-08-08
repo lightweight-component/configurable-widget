@@ -54,6 +54,7 @@ declare type JsonBased = {
      */
     key: string;
 };
+
 /**
  * JSON 值类型
  */
