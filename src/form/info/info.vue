@@ -134,7 +134,10 @@
     </template>
 
     <template slot="more-attrib" slot-scope="scope">
-      <MoreAttrib v-if="scope.row && scope.row.ext_attribs " :row="scope.row" />
+      <div>
+      <!-- <MoreAttrib v-if="scope.row && scope.row.ext_attribs " :row="scope.row" /> -->
+      <MoreAttrib v-if="scope.row" :row="scope.row" />
+      </div>
     </template>
 
     <Modal v-model="jsonBased.isShowJsonBased" title="根据 JSON 定义创建表单" width="650" @on-ok="parseJsonBased">
