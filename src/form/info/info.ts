@@ -155,6 +155,7 @@ export default {
             this.listDef = { page: 1, colConfig: [] };
         },
         perview(): void {
+            this.$refs.preview.cfg = this.cfg;
             this.isShowPerview = true;
         },
         /**

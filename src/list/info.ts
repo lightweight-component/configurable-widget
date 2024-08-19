@@ -6,13 +6,13 @@ import ListSelector from "../widget/list-selector.vue";
 // import FormFactoryMethod from "../factory-form/edit/form-factory.vue";
 import ConfigTable from '../common/config-table.vue';
 import InfoMixins from '../common/info-common';
-import FastTable from '../widget/fast-iview-table.vue';
+import ListLoader from "./list-loader.vue";
 
 /**
  * 内页
  */
 export default {
-    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, FastTable },
+    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, ListLoader },
     mixins: [InfoMixins],
     data(): {} {
         let self: any = this;

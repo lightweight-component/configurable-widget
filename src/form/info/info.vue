@@ -126,7 +126,7 @@
     </template>
 
     <template slot="live-perview">
-      <FormLoader ref="FromRenderer" :form-id="id" :cfg="cfg" :is_show_btns="false" />
+      <FormLoader ref="FromRenderer" :init-cfg="cfg" :is_show_btns="false" />
     </template>
 
     <template slot="config-panel">
@@ -147,7 +147,8 @@
     </Modal>
 
     <Modal v-model="isShowPerview" title="预览" width="800" ok-text="关闭" cancel-text="">
-        <FormLoader ref="preview" :form-id="id" :cfg="cfg" />
+        <!-- <FormLoader ref="preview" :form-id="id" :cfg="cfg" /> -->
+        <FormLoader ref="preview" />
     </Modal>
   </ConfigTable>
 </template>

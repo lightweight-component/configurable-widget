@@ -5,14 +5,16 @@ import FromRenderer from "./renderer/form-factory-renderer.vue";
 export default {
     components: { FromRenderer },
     props: {
-        cfg: { type: Object, required: false }, // 表单配置，演示时候传入
-        formId: { type: Number, required: false }, // 表单配置 id
+        initCfg: { type: Object, required: false, default: () => { return { fields: [] }; } }, // 表单配置，演示时候传入
+        // formId: { type: Number, required: false }, // 表单配置 id
         isShowBtns: { type: Boolean, required: false, default: true }, // 是否显示按钮，还是自定义按钮？
     },
     data() {
+
         return {
+            formId: 0, // 表单定义 id
             entityId: 0, // 实体 id
-            cfg_: this.cfg, //{ fields: [] },
+            cfg: this.initCfg,
             status: 1, // 0=查看/1=新增/2=修改
             oldJson: null, // JSON Based 下的旧 JSON 完整数据。因为 data 只有部分
         };

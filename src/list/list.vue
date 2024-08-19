@@ -15,7 +15,7 @@
     </FastTable>
 
     <Modal v-model="perview.isShow" title="预览" width="1200" ok-text="关闭" cancel-text="">
-      <FastTable ref="listDefDemo" :is-remote-col-def="true" />
+      <ListLoader ref="listDefDemo" />
     </Modal>
   </div>
 </template>
@@ -25,12 +25,13 @@ import FastTable from "../widget/fast-iview-table.vue";
 // @ts-ignore
 //import FastTable from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/fast-iview-table.vue';
 import List from "@ajaxjs/ui/dist/iView-ext/fast-iview-table/list";
+import ListLoader from "./list-loader.vue";
 
 /**
  * 管理界面列表
  */
 export default {
-  components: { FastTable },
+  components: { FastTable, ListLoader },
   data() {
     return {
       perview: { isShow: false, title: "", data: {} },
