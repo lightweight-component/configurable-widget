@@ -94,12 +94,12 @@ const renderProjectTreeNode = (h: Function, { root, node, data }) => {
 const renderCrudTreeNode = (h: Function, { root, node, data }) => {
     if (data.title == '表单定义')
         return [
-            h("span", { class: "http-method post" }, 'F'),
+            h("span", { class: "http-method put" }, 'F'),
             h("span", data.title),
         ];
     else if (data.title == '列表定义')
         return [
-            h("span", { class: "http-method get" }, 'L'),
+            h("span", { class: "http-method post" }, 'L'),
             h("span", data.title),
         ];
 };

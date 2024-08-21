@@ -10,6 +10,7 @@ export default {
         return {
             id: this.initId || 0,
             name: '',
+            isShowPerview: false,
             datasourceId: 0,    // 关联的数据源 id。不是数据绑定，没什么约束力，只是参考用
             datasourceName: '', // 关联的数据源名称。不是数据绑定，没什么约束力，只是参考用
             tableName: '',      // 关联的表名。不是数据绑定，没什么约束力，只是参考用
@@ -79,6 +80,28 @@ export default {
         },
 
         /**
+         * 新增
+         */
+        addRow_(row: any): void {
+            this.cfg.fields.push(row);
+            this.editIndex = this.cfg.fields.length - 1;
+        },
+
+        /**
+         * 保存新增
+         */
+        saveAddRow_(s1: string, s2: string): void {
+            let lastRow: any = this.cfg.fields[this.cfg.fields.length - 1];
+
+            if (!lastRow[s1] || !lastRow[s2]) {
+                this.$Message.error('请填写完整内容');
+                return;
+            }
+
+            this.editIndex = -1;
+        },
+
+        /**
          * 默认的清空数据方法，用于新建的状态。子类可以覆盖
          */
         emptyData(): void {
@@ -101,8 +124,6 @@ export default {
                 // 新建
                 this.emptyData();
             }
-        },
-    },
-
-
+        }
+    }
 }

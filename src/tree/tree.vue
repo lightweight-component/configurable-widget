@@ -24,7 +24,7 @@
     </span>
 </template>
 
-<script lang="ts" src="./index.ts"></script>
+<script lang="ts" src="./tree.ts"></script>
 
 <style lang="less" scoped>
 .search-panel {

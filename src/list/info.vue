@@ -109,7 +109,7 @@
         <!-- 选择哪张表单绑定 -->
         <ListSelector ref="SelectForm" title="表单配置" :API="apiRoot + '/common_api/widget_config/list?q_type=LIST'" @on-select="onFormSelected($event)" :columns="formSelectorCols" />
 
-        <FormPerviewLoader ref="FormPerviewLoader" />
+        <FormLoader ref="FormPerviewLoader" />
       </Form>
     </template>
 

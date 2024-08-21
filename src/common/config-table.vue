@@ -87,7 +87,6 @@
 <script>
 import draggable from "vuedraggable";
 import DataModelSelector from "../widget/data-model-selector/index.vue";
-// import ApiSelector from './api-selector/index.vue';
 
 export default {
   components: { draggable, DataModelSelector },

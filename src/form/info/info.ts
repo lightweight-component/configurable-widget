@@ -14,7 +14,6 @@ export default {
     data(): {} {
         return {
             API: this.api || `${window['config'].dsApiRoot}/common_api/widget_config`,
-            isShowPerview: false,
             cfg: {
                 labelWidth: 80,
                 dataBinding: {
@@ -100,6 +99,8 @@ export default {
 
                 if (this.cfg.jsonBased && this.cfg.jsonBased.isJsonBased)
                     this.view = 'form';
+
+                this.$refs.LiveFormPerview.cfg = this.cfg;
             }
 
             this.getDataBase(_cb);
@@ -114,25 +115,15 @@ export default {
          */
         addRow(): void {
             let row: FormFactory_ItemConfig = { isShow: true, name: '', label: '', uiType: 1, uiLayout: 1, jsonType: 'string', isNull: false };
-
-            this.cfg.fields.push(row);
-            this.editIndex = this.cfg.fields.length - 1;
+            this.addRow_(row);
         },
 
         /**
          * 保存新增
          */
         saveAddRow(): void {
-            let lastRow: FormFactory_ItemConfig = this.cfg.fields[this.cfg.fields.length - 1];
-
-            if (!lastRow.name || !lastRow.label) {
-                this.$Message.error('请填写完整内容');
-                return;
-            }
-
-            this.editIndex = -1;
+            this.saveAddRow_('name', 'label');
         },
-
 
         /**
          * 选中表单配置之后
@@ -152,12 +143,28 @@ export default {
         // @override
         emptyData(): void {
             this.name = '';
-            this.listDef = { page: 1, colConfig: [] };
+            this.cfg = { fields: [] };
         },
         perview(): void {
             this.$refs.preview.cfg = this.cfg;
             this.isShowPerview = true;
         },
+
+        /**
+         * 数据库字段转换为表单配置
+         */
+        fieldsToCfg(selected: SelectedTable): void {
+            debugger
+            if (selected && selected.fields && selected.fields.length) {
+                this.cfg.fields = [];
+                this.tableName = selected.tableName;
+                this.datasourceId = selected.datasourceId;
+                this.datasourceName = selected.datasourceName;
+                selected.fields.forEach((item: CheckableDataBaseColumnMeta) => toCfg(item, this.cfg.fields));
+            } else
+                this.$Message.warning('未选择任何字段');
+        },
+
         /**
          * 从 JSON 新建
          */

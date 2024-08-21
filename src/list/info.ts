@@ -3,7 +3,7 @@ import Fields2Cfg from './renderer/fields-to-cfg';
 import CellRender from './renderer/list-cell-render';
 import MoreAttrib from './list-more-attrib.vue';
 import ListSelector from "../widget/list-selector.vue";
-// import FormFactoryMethod from "../factory-form/edit/form-factory.vue";
+import FormLoader from "../form/form-loader.vue";
 import ConfigTable from '../common/config-table.vue';
 import InfoMixins from '../common/info-common';
 import ListLoader from "./list-loader.vue";
@@ -12,7 +12,7 @@ import ListLoader from "./list-loader.vue";
  * 内页
  */
 export default {
-    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, ListLoader },
+    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, ListLoader, FormLoader },
     mixins: [InfoMixins],
     data(): {} {
         let self: any = this;
@@ -20,7 +20,6 @@ export default {
         return {
             // @ts-ignore
             API: this.api || `${config.dsApiRoot}/common_api/widget_config`,
-            isShowPerview: false,
             initTableData: [], // 预览用的表格数据
             rendererColDef: [] as iViewTableColumn[], // 渲染器的列定义
             selectedTable: {} as SelectedTable,
@@ -101,23 +100,14 @@ export default {
          */
         addRow(): void {
             let row: FormFactory_ItemConfig = { isShow: true, name: '', label: '', uiType: 1, uiLayout: 1, jsonType: 'string', isNull: false };
-
-            this.cfg.fields.push(row);
-            this.editIndex = this.cfg.fields.length - 1;
+            this.addRow_(row);
         },
 
         /**
          * 保存新增
          */
         saveAddRow(): void {
-            let lastRow: BaseCol = this.cfg.fields[this.cfg.fields.length - 1];
-
-            if (!lastRow.key || !lastRow.title) {
-                this.$Message.error('请填写完整内容');
-                return;
-            }
-
-            this.editIndex = -1;
+            this.saveAddRow_('key', 'title');
         },
 
         /**
@@ -125,8 +115,8 @@ export default {
          */
         fieldsToCfg(selected: SelectedTable): void {
             this.selectedTable = selected;
-
             let listCfg: ListFactory_ListConfig = this.cfg;
+
             if (selected && selected.fields && selected.fields.length) {
                 listCfg.fields = [];
                 this.datasourceId = selected.datasourceId;

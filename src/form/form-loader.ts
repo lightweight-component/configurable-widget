@@ -123,6 +123,7 @@ export default {
                 let jsonTarget: any = findNode(this.oldJson, this.entityId.split('.'));
                 Object.assign(jsonTarget, this.$refs.FromRenderer.data);
 
+                // @ts-ignore
                 let json: string = JSON.stringify(r.params);
                 console.log(json);
 
