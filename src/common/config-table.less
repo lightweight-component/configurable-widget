@@ -6,15 +6,18 @@ ul.table {
     width: 100%;
     margin: 30px 0 0 0;
     overflow-x: auto;
+
     li {
         list-style: none;
         white-space: nowrap;
         border-bottom: 1px solid #e8eaec;
         transition: background-color 0.2s ease-in-out;
+
         .checkbox-width {
             width: 50px;
             text-align: center;
         }
+
         .field,
         .uiLabel {
             width: 150px;
@@ -23,6 +26,7 @@ ul.table {
         .input-width {
             width: 150px;
         }
+
         .input-width-small {
             width: 110px;
         }
@@ -58,8 +62,8 @@ ul.table {
         /* width: max-content; */
     }
 
-    & > header > li > div,
-    & > section > li > div {
+    &>header>li>div,
+    &>section>li>div {
         text-align: center;
         padding: 10px 5px;
         display: inline-block;
@@ -74,14 +78,16 @@ ul.table {
 .config-table {
     overflow: hidden;
     padding: 10px;
-    
+
     .main {
         float: left;
         width: 100%;
+
         &.small {
             width: 60%;
         }
     }
+
     .live-perview {
         &.hide {
             display: none;
@@ -92,5 +98,10 @@ ul.table {
         overflow: auto;
         min-height: 500px;
         max-height: 600px;
+    }
+
+    .below-perview {
+        float: initial;
+        width: 100%;
     }
 }

@@ -1,5 +1,5 @@
 <template>
-  <ConfigTable class="list-factory" :fields="listDef.colConfig">
+  <ConfigTable class="list-factory" :fields="cfg.colConfig" below-perview>
     <template slot="table-header">
       <div class="input-width">渲染器</div>
       <div class="align">对齐方式</div>
@@ -7,7 +7,7 @@
       <div class="number-width">列宽</div>
       <div class="number-width">最大列宽</div>
       <div class="checkbox-width">不换行</div>
-<!--       <div class="checkbox-width">可搜索</div> -->
+      <!--       <div class="checkbox-width">可搜索</div> -->
       <div class="checkbox-width">可排序</div>
       <div class="checkbox-width">下拉筛选</div>
     </template>
@@ -54,7 +54,7 @@
       <div class="checkbox-width">
         <Checkbox v-model="scope.item.isOneLine" />
       </div>
-<!--       <div class="checkbox-width">
+      <!--       <div class="checkbox-width">
         <Checkbox v-model="scope.item.canSearch" />
       </div> -->
       <div class="checkbox-width">
@@ -91,7 +91,7 @@
         </FormItem>
 
         <FormItem label="分页参数">
-          <RadioGroup v-model="listDef.page">
+          <RadioGroup v-model="cfg.page">
             <Radio :label="0">不分页</Radio><i class="ivu-icon ivu-icon-ios-help-circle-outline" title="不分页则一次性查询所有数据，适合数据量较少的列表" />&nbsp;
             <Radio :label="1">start/limit</Radio>
             <Radio :label="2">pageNo/pageSize</Radio>
@@ -103,7 +103,7 @@
         </fieldset>
 
         <FormItem label="API 接口">
-          <Input v-model="listDef.httpApi" placeholder="API 接口，{project_prefix} 表示项目前缀" style="width:70%" />
+          <Input v-model="cfg.httpApi" placeholder="API 接口，{project_prefix} 表示项目前缀" style="width:70%" />
         </FormItem>
 
         <!-- 选择哪张表单绑定 -->
@@ -111,6 +111,10 @@
 
         <FormLoader ref="FormPerviewLoader" />
       </Form>
+    </template>
+
+    <template slot="live-perview">
+      <ListLoader ref="LiveListPerview" :show-search="false" />
     </template>
 
     <Modal v-model="isShowPerview" title="预览" width="1200" ok-text="关闭" cancel-text="">

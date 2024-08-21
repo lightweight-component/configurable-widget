@@ -15,6 +15,7 @@ export default {
             datasourceName: '', // 关联的数据源名称。不是数据绑定，没什么约束力，只是参考用
             tableName: '',      // 关联的表名。不是数据绑定，没什么约束力，只是参考用
             editIndex: -1,
+            widgetType: '' // 组件类型
         };
     },
     mounted(): void {
@@ -48,7 +49,9 @@ export default {
         /**
          * 创建 api-> 持久化
          */
-        saveOrUpdate(config: any, type: string): void {
+        saveOrUpdate(): void {
+            let config: any = this.cfg;
+
             if (!this.name) {
                 this.$Message.error('保存失败。请输入名称');
                 return;
@@ -57,7 +60,7 @@ export default {
             let valueObj: ConfigurableWidgetPO = {
                 name: this.name,
                 config: JSON.stringify(config, null, 1),
-                type
+                type: this.widgetType
             };
 
             if (this.id) {

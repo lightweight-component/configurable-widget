@@ -17,7 +17,6 @@ export default {
     },
     data() {
         return {
-            // cfg: this.initCfg,
             isShowForm: false,          // 是否显示表单窗体
             tableData: this.initTableData,
             list: {

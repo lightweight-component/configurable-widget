@@ -1,14 +1,12 @@
 <template>
   <div class="config-table">
-    <div :class="{main: true, small: isShowLivePerview}">
-
+    <div :class="{main: true, small: isShowLivePerview && !belowPerview, 'below-perview':belowPerview}">
       <span style="float:right">
         <!--  <Button :disabled="isDisabled" class="rightMargin" icon="ios-exit-outline" @click="$parent.exportCmp">静态化组件</Button> -->
-        <span v-if="isEnableLivePerview">实时预览 </span>
-
-        <i-Switch v-if="isEnableLivePerview" v-model="isShowLivePerview" class="rightMargin" />
+        <span>实时预览 </span>
+        <i-Switch v-model="isShowLivePerview" class="rightMargin" />
         <Button :disabled="isDisabled" class="rightMargin" icon="ios-eye" @click="$parent.perview">预览</Button>
-        <Button :disabled="isDisabled" icon="ios-create-outline" type="primary" @click="$parent.save">保存</Button>
+        <Button :disabled="isDisabled" icon="ios-create-outline" type="primary" @click="$parent.saveOrUpdate">保存</Button>
       </span>
 
       <Button class="rightMargin" icon="md-list" @click="isShowFieldsSelect = true" title="根据数据库各个字段导入列表的元数据">选择数据库</Button>
@@ -60,7 +58,7 @@
       </ul>
     </div>
 
-    <div :class="{'live-perview': true, hide: !isShowLivePerview}">
+    <div :class="{'live-perview': true, hide: !isShowLivePerview, 'below-perview': belowPerview}">
       <slot name="live-perview" />
     </div>
 
@@ -93,7 +91,7 @@ export default {
   props: {
     columns: Array,
     fields: Array,
-    isEnableLivePerview: Boolean,
+    belowPerview: Boolean,
   },
   data() {
     return {

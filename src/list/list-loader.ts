@@ -13,10 +13,12 @@ export default {
         createRoute: { type: String, required: false },     // 新建事件触发时候，进入的路由地址
         editRoute: { type: String, required: false },       // 编辑事件触发时候，进入的路由地址
         defaultAction: { type: Boolean, required: false, default: true },
+        showSearch: { type: Boolean, required: false, default: true },
     },
     data() {
         return {
             widgetName_: '',
+            cfg: { fields: [] },
             listApiUrl_: '',
             colDefId: 0,
             list: {
@@ -47,29 +49,30 @@ export default {
 
                 if (j.status) {
                     this.widgetName_ = j.data.name;
-
-                    this.listApiUrl_ = j.data.config.httpApi.replace('{project_prefix}', window.config.IAM_ApiRoot);
-                    let colDefs: TableColumn[] = j.data.config.colConfig;
-                    this.list.columns = [];
-                    this.bindingFormId = j.data.config.bindingFormId;
-
-                    colDefs.forEach((item: TableColumn) => { // 转换为 iView 的配置
-                        if (item.isShow) {
-                            let rendererColDef: iViewTableColumn = { title: item.title, key: item.key, width: item.width, minWidth: item.minWidth, align: item.align };
-
-                            CellRender(rendererColDef, item);
-
-                            this.list.columns.push(rendererColDef);
-                        }
-                    });
-
-                    if (this.defaultAction)
-                        this.list.columns.push({ title: "操作", slot: "action", align: "center", width: 260 });
-
-                    this.getData();
+                    this.renderConfig(j.data.config);
                 } else
                     this.$Message.warning(j.message || '获取列表失败');
             });
+        },
+        renderConfig(cfg: ListFactory_ListConfig_New): void {
+            this.listApiUrl_ = cfg.httpApi.replace('{project_prefix}', window.config.IAM_ApiRoot);
+            let colDefs: TableColumn[] = cfg.colConfig;
+            this.list.columns = [];
+
+            colDefs.forEach((item: TableColumn) => { // 转换为 iView 的配置
+                if (item.isShow) {
+                    let rendererColDef: iViewTableColumn = { title: item.title, key: item.key, width: item.width, minWidth: item.minWidth, align: item.align };
+
+                    CellRender(rendererColDef, item);
+
+                    this.list.columns.push(rendererColDef);
+                }
+            });
+
+            if (this.defaultAction)
+                this.list.columns.push({ title: "操作", slot: "action", align: "center", width: 260 });
+
+            this.getData();
         },
         getData(): void {
             this.list.loading = true;
@@ -116,6 +119,7 @@ export default {
                 this.$parent.edit(id);
             }
         },
+
         /**
          * 编辑
          */
@@ -148,6 +152,12 @@ export default {
         },
         colDefId(v: number): void {
             this.getRemoteColDef();
+        },
+        'cfg': {
+            handler(cfg: ListFactory_ListConfig_New): void {
+                this.renderConfig(cfg);
+            },
+            deep: true
         }
     },
 };

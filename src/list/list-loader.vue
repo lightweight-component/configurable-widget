@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 搜索表单 -->
-    <Card :bordered="false" dis-hover class="common-search-panel" style="text-align:left">
+    <Card :bordered="false" dis-hover class="common-search-panel" style="text-align:left" v-if="showSearch">
       <span style="float:right;">
         <Button type="primary" icon="ios-search" @click="$parent.getData()">查询</Button>
         <Button style="margin-left:10px" @click="reset">重置</Button>

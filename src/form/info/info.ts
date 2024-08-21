@@ -13,6 +13,7 @@ export default {
     mixins: [InfoMixins],
     data(): {} {
         return {
+            widgetType: 'FORM_DEF',
             API: this.api || `${window['config'].dsApiRoot}/common_api/widget_config`,
             cfg: {
                 labelWidth: 80,
@@ -106,10 +107,6 @@ export default {
             this.getDataBase(_cb);
         },
 
-        save(): void {
-            this.saveOrUpdate(this.cfg, 'FORM_DEF');
-        },
-
         /**
          * 新增
          */
@@ -125,26 +122,15 @@ export default {
             this.saveAddRow_('name', 'label');
         },
 
-        /**
-         * 选中表单配置之后
-         *
-         * @param formCfg
-         */
-        onFormSelected({ id, name }): void {
-            this.$refs.SelectForm.isShowListModal = false;
-
-            let cfg: ListFactory_ListConfig_New = this.listDef;
-            cfg.bindingFormId = id;
-            cfg.bindingFormName = name;
-
-            this.$forceUpdate();
-        },
-
         // @override
         emptyData(): void {
             this.name = '';
             this.cfg = { fields: [] };
         },
+
+        /**
+         * 预览
+         */
         perview(): void {
             this.$refs.preview.cfg = this.cfg;
             this.isShowPerview = true;

@@ -18,30 +18,32 @@ export default {
         let self: any = this;
 
         return {
+            widgetType: 'LIST_DEF',
             // @ts-ignore
             API: this.api || `${config.dsApiRoot}/common_api/widget_config`,
             initTableData: [], // 预览用的表格数据
             rendererColDef: [] as iViewTableColumn[], // 渲染器的列定义
             selectedTable: {} as SelectedTable,
             searchFields: [],
-            cfg: {
-                isPage: true,
-                page: 2,
-                dataBinding: {
-                    httpMethod: 'GET',
-                    url: "",
-                    beforeRequest: '',
-                    baseParams: ''
-                },
-                fields: [], // 列配置
-                toolbarButtons: [],
-                actionButtons: [],
-                bindingForm: { id: 0, name: '' }
-            } as ListFactory_ListConfig,
+            // cfg: {
+            //     isPage: true,
+            //     page: 2,
+            //     dataBinding: {
+            //         httpMethod: 'GET',
+            //         url: "",
+            //         beforeRequest: '',
+            //         baseParams: ''
+            //     },
+            //     fields: [], // 列配置
+            //     toolbarButtons: [],
+            //     actionButtons: [],
+            //     bindingForm: { id: 0, name: '' }
+            // } as ListFactory_ListConfig,
 
-            listDef: {
+            cfg: {
                 page: 1
             } as ListFactory_ListConfig_New,
+
             formSelectorCols: [
                 { key: "id", title: "#", width: 60 },
                 { key: "name", title: "名称", minWidth: 80 },
@@ -57,24 +59,16 @@ export default {
                     title: "预览",
                     width: 70,
                     render(h: Function, params: any) {
-                        return h(
-                            "a",
-                            {
-                                on: {
-                                    click: (event: Event) => {
-                                        let FormPerviewLoader = self.$refs.FormPerviewLoader;
-                                        debugger;
-                                        // @ts-ignore
-                                        FormPerviewLoader.cfg = FormFactoryMethod.methods.copyValue(
-                                            {},
-                                            params.row
-                                        ); // 数据库记录转换到 配置对象;
-                                        FormPerviewLoader.isShow = true;
-                                    },
+                        return h("a", {
+                            on: {
+                                click: (event: Event) => {
+                                    let FormPerviewLoader = self.$refs.FormPerviewLoader;
+                                    // @ts-ignore
+                                    FormPerviewLoader.cfg = FormFactoryMethod.methods.copyValue({}, params.row); // 数据库记录转换到 配置对象;
+                                    FormPerviewLoader.isShow = true;
                                 },
                             },
-                            "预览"
-                        );
+                        }, "预览");
                     },
                 },
             ],
@@ -86,13 +80,10 @@ export default {
          * 获取单个数据
          */
         getData(): void {
-            let _cb: Function = (r: any) => this.listDef = r.config;
-
-            this.getDataBase(_cb);
-        },
-
-        save(): void {
-            this.saveOrUpdate(this.listDef, 'LIST_DEF');
+            this.getDataBase((r: any) => {
+                this.cfg = r.config;
+                this.$refs.LiveListPerview.cfg = this.cfg;
+            });
         },
 
         /**
@@ -108,6 +99,17 @@ export default {
          */
         saveAddRow(): void {
             this.saveAddRow_('key', 'title');
+        },
+
+        // @override
+        emptyData(): void {
+            this.name = '';
+            this.cfg = { page: 1, colConfig: [] };
+        },
+
+        perview(): void {
+            this.$refs.listDefDemo.colDefId = this.id;
+            this.isShowPerview = true;
         },
 
         /**
@@ -138,7 +140,7 @@ export default {
             if (this.initTableData.length)
                 this.initTableData = [];
 
-            let listCfg: ListFactory_ListConfig_New = this.listDef;
+            let listCfg: ListFactory_ListConfig_New = this.cfg;
             let fields: TableColumn[] = listCfg.colConfig;
 
             fields.forEach((item: TableColumn) => { // 转换为 iView 的配置
@@ -159,7 +161,7 @@ export default {
          * @returns
          */
         getFormConfig(): string {
-            let cfg: ListFactory_ListConfig_New = this.listDef;
+            let cfg: ListFactory_ListConfig_New = this.cfg;
 
             if (cfg && cfg.bindingFormId)
                 return (cfg.bindingFormId || "") + "#" + (cfg.bindingFormName || '');
@@ -174,21 +176,11 @@ export default {
         onFormSelected({ id, name }): void {
             this.$refs.SelectForm.isShowListModal = false;
 
-            let cfg: ListFactory_ListConfig_New = this.listDef;
+            let cfg: ListFactory_ListConfig_New = this.cfg;
             cfg.bindingFormId = id;
             cfg.bindingFormName = name;
 
             this.$forceUpdate();
-        },
-
-        // @override
-        emptyData(): void {
-            this.name = '';
-            this.listDef = { page: 1, colConfig: [] };
-        },
-        perview(): void {
-            this.$refs.listDefDemo.colDefId = this.id;
-            this.isShowPerview = true;
         }
     }
 }
