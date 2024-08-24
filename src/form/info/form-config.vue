@@ -7,12 +7,12 @@
         <Row>
           <Col span="12">
           <FormItem label="数据源">
-            {{cfg.dataBinding.datasourceName}}#{{cfg.dataBinding.datasourceId}}
+            <!-- {{cfg.dataBinding.datasourceName}}#{{cfg.dataBinding.datasourceId}} -->
           </FormItem>
           </Col>
           <Col span="12">
           <FormItem label="绑定表名">
-            {{cfg.dataBinding.tableName}}
+           <!--  {{cfg.dataBinding.tableName}} -->
           </FormItem>
           </Col>
           <FormItem label="Label 宽度"><Input type="number" v-model="cfg.labelWidth" :number="true" /></FormItem>

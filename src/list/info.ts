@@ -80,17 +80,14 @@ export default {
          * 获取单个数据
          */
         getData(): void {
-            this.getDataBase((r: any) => {
-                this.cfg = r.config;
-                this.$refs.LiveListPerview.cfg = this.cfg;
-            });
+            this.getDataBase(() => this.$refs.configTable.fields = this.cfg.colConfig);
         },
 
         /**
          * 新增
          */
         addRow(): void {
-            let row: FormFactory_ItemConfig = { isShow: true, name: '', label: '', uiType: 1, uiLayout: 1, jsonType: 'string', isNull: false };
+            let row: TableColumn = { isShow: true, title: '', align: 'center', key: '', render: 'raw' };
             this.addRow_(row);
         },
 
@@ -105,11 +102,6 @@ export default {
         emptyData(): void {
             this.name = '';
             this.cfg = { page: 1, colConfig: [] };
-        },
-
-        perview(): void {
-            this.$refs.listDefDemo.colDefId = this.id;
-            this.isShowPerview = true;
         },
 
         /**
@@ -164,7 +156,7 @@ export default {
             let cfg: ListFactory_ListConfig_New = this.cfg;
 
             if (cfg && cfg.bindingFormId)
-                return (cfg.bindingFormId || "") + "#" + (cfg.bindingFormName || '');
+                return '#' + (cfg.bindingFormId || "") + " " + (cfg.bindingFormName || '');
             else return "未绑定";
         },
 
@@ -181,6 +173,11 @@ export default {
             cfg.bindingFormName = name;
 
             this.$forceUpdate();
+        },
+
+        syncData(newValue: any): void {
+            if (newValue)
+                this.cfg.colConfig = newValue;
         }
     }
 }

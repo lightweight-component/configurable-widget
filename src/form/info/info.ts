@@ -95,16 +95,12 @@ export default {
          * 获取单个数据
          */
         getData(): void {
-            let _cb: Function = (r: any) => {
-                this.cfg = r.config;
+            this.getDataBase((r: any) => {
+                this.$refs.configTable.fields = this.cfg.fields
 
                 if (this.cfg.jsonBased && this.cfg.jsonBased.isJsonBased)
                     this.view = 'form';
-
-                this.$refs.LiveFormPerview.cfg = this.cfg;
-            }
-
-            this.getDataBase(_cb);
+            });
         },
 
         /**
@@ -129,18 +125,9 @@ export default {
         },
 
         /**
-         * 预览
-         */
-        perview(): void {
-            this.$refs.preview.cfg = this.cfg;
-            this.isShowPerview = true;
-        },
-
-        /**
          * 数据库字段转换为表单配置
          */
         fieldsToCfg(selected: SelectedTable): void {
-            debugger
             if (selected && selected.fields && selected.fields.length) {
                 this.cfg.fields = [];
                 this.tableName = selected.tableName;
@@ -192,6 +179,10 @@ export default {
 
             this.cfg.jsonBased.isJsonBased = true;
             this.view = 'form';
+        },
+        syncData(newValue: any): void {
+            if (newValue)
+                this.cfg.fields = newValue;
         }
     }
 }
@@ -214,7 +205,9 @@ function toCfg(item: CheckableDataBaseColumnMeta, tableColumnData: FormFactory_I
         length: item.length,
         uiType: 1,
         uiLayout: 1,
-        defaultValue: item.defaultValue
+        defaultValue: item.defaultValue,
+        // @ts-ignore
+        ext_attribs: item.ext_attribs || {}
     };
 
     if (item.null === 'YES')

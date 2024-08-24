@@ -26,6 +26,7 @@ import FastTable from "../widget/fast-iview-table.vue";
 //import FastTable from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/fast-iview-table.vue';
 import List from "@ajaxjs/ui/dist/iView-ext/fast-iview-table/list";
 import ListLoader from "./list-loader.vue";
+import { dateFormat } from '@ajaxjs/util/dist/util/utils';
 
 /**
  * 管理界面列表
@@ -48,24 +49,32 @@ export default {
             tooltip: true,
           },
           {
-            title: "关联数据库",
+            title: "关联表单",
             render(h: Function, params: any) {
-              if (params.row.datasourceName)
-                return h(
-                  "span",
-                  params.row.datasourceName + "/" + params.row.tableName
-                );
-              else return h("span", params.row.tableName);
+               return h("span", params.row.config.bindingFormName);
+              // if (params.row.datasourceName)
+              //   return h("span",
+              //     params.row.datasourceName + "/" + params.row.tableName
+              //   );
+              // else return h("span", params.row.tableName);
             },
-            width: 280,
+            width: 180,
             ellipsis: true,
           },
-          // {
-          //     title: '接口地址', minWidth: 230, render: (h: Function, params: any) => h('span', params.row.config.dataBinding.url),
-          //     ellipsis: true, tooltip: true
-          // },
+          {
+              title: '接口地址', minWidth: 250, render: (h: Function, params: any) => h('span', params.row.config.httpApi),
+              ellipsis: true, tooltip: true
+          },
+          {
+              title: "修改日期",
+              width: 160,
+              align: "center",
+              render(h: Function, params: any) {
+                return h("div", dateFormat.call( new Date(params.row.updateDate), "yyyy-MM-dd hh:mm"));
+              },
+          },
           List.createDate,
-          // List.status,
+          List.status,
           { title: "操作", slot: "action", align: "center", width: 260 },
         ],
       },

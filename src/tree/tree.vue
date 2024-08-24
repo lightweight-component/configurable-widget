@@ -1,7 +1,7 @@
 <template>
     <span>
         <div class="search-panel ">
-          <i-Input suffix="ios-search" placeholder="搜索数据服务……" style="width: 90%" />
+          <i-Input suffix="ios-search" placeholder="搜索……" style="width: 90%" />
         </div>
 
         <Tree ref="treeCmp" :data="treeData" :load-data="loadTreeData" style="height: 93%;overflow-y: auto;margin-left: 10px;" 

@@ -39,8 +39,9 @@ export default {
                     this.datasourceId = r.datasourceId || 0;
                     this.datasourceName = r.datasourceName || 0;
                     this.tableName = r.tableName || 0;
-
-                    cb(r);
+                    this.cfg = r.config;
+                    cb && cb(r);
+                    this.$refs.LivePerview.cfg = this.cfg;
                 } else
                     this.$Message.warning('获取配置失败');
             });
@@ -88,6 +89,8 @@ export default {
         addRow_(row: any): void {
             this.cfg.fields.push(row);
             this.editIndex = this.cfg.fields.length - 1;
+            let container = this.$el.querySelector('.content-panel');
+            setTimeout(() => container.scrollTop = container.scrollHeight, 200); // 滚动到底部
         },
 
         /**
@@ -112,8 +115,12 @@ export default {
             this.cfg.fields = [];
         },
 
+        /**
+         * 预览
+         */
         perview(): void {
-
+            this.$refs.preview.cfg = this.cfg;
+            this.isShowPerview = true;
         }
     },
     watch: {

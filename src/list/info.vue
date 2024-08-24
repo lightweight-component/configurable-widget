@@ -1,5 +1,5 @@
 <template>
-  <ConfigTable class="list-factory" :fields="cfg.colConfig" below-perview>
+  <ConfigTable ref="configTable" class="list-factory" below-perview>
     <template slot="table-header">
       <div class="input-width">渲染器</div>
       <div class="align">对齐方式</div>
@@ -114,11 +114,11 @@
     </template>
 
     <template slot="live-perview">
-      <ListLoader ref="LiveListPerview" :show-search="false" />
+      <ListLoader ref="LivePerview" :show-search="false" />
     </template>
 
     <Modal v-model="isShowPerview" title="预览" width="1200" ok-text="关闭" cancel-text="">
-      <ListLoader ref="listDefDemo" />
+      <ListLoader ref="preview" />
     </Modal>
 
     <template slot="more-attrib" slot-scope="scope">

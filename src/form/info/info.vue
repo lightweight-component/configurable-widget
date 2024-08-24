@@ -1,5 +1,5 @@
 <template>
-  <ConfigTable class="form-factory" :fields="cfg.fields">
+  <ConfigTable ref="configTable" class="form-factory">
     <template slot="topbar">
       <a @click="jsonBased.isShowJsonBased = true">从JSON新建</a> | 视图：<a @click="view = 'model'" :class="{selected : view == 'model'}">模型</a> | <a @click="view = 'form'" :class="{selected : view == 'form'}">表单</a> |
     </template>
@@ -126,7 +126,7 @@
     </template>
 
     <template slot="live-perview">
-      <FormLoader ref="LiveFormPerview" :is_show_btns="false" />
+      <FormLoader ref="LivePerview" :is_show_btns="false" />
     </template>
 
     <template slot="config-panel">

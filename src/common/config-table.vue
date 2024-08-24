@@ -30,7 +30,7 @@
           </li>
         </header>
 
-        <draggable tag="section" handle=".handleSort" v-model="fields" chosenClass="chosen" forceFallback="true" group="people" animation="1000">
+        <draggable class="content-panel" tag="section" handle=".handleSort" v-model="fields" chosenClass="chosen" forceFallback="true" group="people" animation="1000">
           <li v-for="(item, index) in fields" :key="index">
             <div class="action">
               <div v-if="$parent.editIndex === index">
@@ -90,7 +90,6 @@ export default {
   components: { draggable, DataModelSelector },
   props: {
     columns: Array,
-    fields: Array,
     belowPerview: Boolean,
   },
   data() {
@@ -102,6 +101,7 @@ export default {
       isShowFieldsSelect: false,
       isShowApiSelect: false,
       currentRow: {},
+      fields: [],
     };
   },
   computed: {
@@ -119,8 +119,11 @@ export default {
     },
   },
   watch: {
-    fields(n) {
-      this.$parent.cfg.fields = n;
+    fields: {
+      handler(newValue) {
+        this.$parent.syncData && this.$parent.syncData(newValue);
+      },
+      deep: true,
     },
   },
 };
