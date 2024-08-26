@@ -23,12 +23,15 @@
         <Table :columns="list.columns" :data="list.data" :loading="list.loading" height="500">
           <template slot-scope="{ row, index }" slot="action">
             <slot name="list_action" :item="row"></slot>
+            <a v-if="pickup" style="color:green;" @click="doPickup(row)">选择</a>
 
-            <a style="color:green;" @click="onEdit(row.id)">编辑</a>
-            <Divider type="vertical" />
-            <Poptip confirm transfer title="是否要删除此行？" @on-ok="deleteInfo(row.id, index)">
-              <a style="color:red;">删除</a>
-            </Poptip>
+            <span v-if="!pickup">
+              <a style="color:green;" @click="onEdit(row.id)">编辑</a>
+              <Divider type="vertical" />
+              <Poptip confirm transfer title="是否要删除此行？" @on-ok="deleteInfo(row.id, index)">
+                <a style="color:red;">删除</a>
+              </Poptip>
+            </span>
           </template>
         </Table>
 

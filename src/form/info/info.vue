@@ -147,7 +147,7 @@
     </Modal>
 
     <Modal v-model="isShowPerview" title="预览" width="800" ok-text="关闭" cancel-text="">
-        <FormLoader ref="preview" />
+      <FormLoader ref="preview" />
     </Modal>
   </ConfigTable>
 </template>

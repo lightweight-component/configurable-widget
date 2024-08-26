@@ -87,7 +87,7 @@
           </Row> -->
 
         <FormItem label="绑定的表单">{{getFormConfig()}}
-          <Button size="small" @click="$refs.SelectForm.isShowListModal = true">选择表单</Button>
+          <Button size="small" @click="isShowListModal = true">选择表单</Button>
         </FormItem>
 
         <FormItem label="分页参数">
@@ -107,7 +107,9 @@
         </FormItem>
 
         <!-- 选择哪张表单绑定 -->
-        <ListSelector ref="SelectForm" title="表单配置" :API="apiRoot + '/common_api/widget_config/list?q_type=LIST'" @on-select="onFormSelected($event)" :columns="formSelectorCols" />
+        <Modal v-model="isShowListModal" title="选择表单" ok-text="关闭" cancel-text="" width="800">
+          <FormListSelector :pickup="true" ref="SelectForm" widget-name="表单配置" :list-api-url="formListApi" @on-select="onFormSelected($event)" :columns-def="formSelectorCols" />
+        </Modal>
 
         <FormLoader ref="FormPerviewLoader" />
       </Form>

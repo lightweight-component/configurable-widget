@@ -14,6 +14,7 @@ export default {
         listApiUrl: { type: String, required: true },
         createRoute: { type: String, required: false },     // 新建事件触发时候，进入的路由地址
         editRoute: { type: String, required: false },       // 编辑事件触发时候，进入的路由地址
+        pickup: { type: Boolean, required: false },       // 编辑事件触发时候，进入的路由地址
     },
     data() {
         return {
@@ -84,6 +85,7 @@ export default {
                 this.$parent.edit(id);
             }
         },
+
         /**
          * 编辑
          */
@@ -96,6 +98,10 @@ export default {
 
                 this.$parent.edit(id);
             }
+        },
+
+        doPickup(data: any): void {
+            this.$emit("on-select", data);
         }
     },
     watch: {

@@ -2,7 +2,7 @@ import ListRenderer from './renderer/list-factory-renderer.vue';
 import Fields2Cfg from './renderer/fields-to-cfg';
 import CellRender from './renderer/list-cell-render';
 import MoreAttrib from './list-more-attrib.vue';
-import ListSelector from "../widget/list-selector.vue";
+import FormListSelector from "../widget/fast-iview-table.vue";
 import FormLoader from "../form/form-loader.vue";
 import ConfigTable from '../common/config-table.vue';
 import InfoMixins from '../common/info-common';
@@ -12,7 +12,7 @@ import ListLoader from "./list-loader.vue";
  * 内页
  */
 export default {
-    components: { ListRenderer, ConfigTable, MoreAttrib, ListSelector, ListLoader, FormLoader },
+    components: { ListRenderer, ConfigTable, MoreAttrib, FormListSelector, ListLoader, FormLoader },
     mixins: [InfoMixins],
     data(): {} {
         let self: any = this;
@@ -25,6 +25,9 @@ export default {
             rendererColDef: [] as iViewTableColumn[], // 渲染器的列定义
             selectedTable: {} as SelectedTable,
             searchFields: [],
+            isShowListModal: false,
+            // @ts-ignore
+            formListApi: `${window.config.dsApiRoot}/common_api/widget_config/page?q_type=FORM_DEF`,
             // cfg: {
             //     isPage: true,
             //     page: 2,
@@ -56,21 +59,27 @@ export default {
                     tooltip: true,
                 },
                 {
-                    title: "预览",
-                    width: 70,
-                    render(h: Function, params: any) {
-                        return h("a", {
-                            on: {
-                                click: (event: Event) => {
-                                    let FormPerviewLoader = self.$refs.FormPerviewLoader;
-                                    // @ts-ignore
-                                    FormPerviewLoader.cfg = FormFactoryMethod.methods.copyValue({}, params.row); // 数据库记录转换到 配置对象;
-                                    FormPerviewLoader.isShow = true;
-                                },
-                            },
-                        }, "预览");
-                    },
+     
+                    title: "选择",
+                    minWidth: 50,
+                    slot: 'action'
                 },
+                // {
+                //     title: "预览",
+                //     width: 70,
+                //     render(h: Function, params: any) {
+                //         return h("a", {
+                //             on: {
+                //                 click: (event: Event) => {
+                //                     let FormPerviewLoader = self.$refs.FormPerviewLoader;
+                //                     // @ts-ignore
+                //                     FormPerviewLoader.cfg = FormFactoryMethod.methods.copyValue({}, params.row); // 数据库记录转换到 配置对象;
+                //                     FormPerviewLoader.isShow = true;
+                //                 },
+                //             },
+                //         }, "预览");
+                //     },
+                // },
             ],
         }
     },
@@ -166,7 +175,8 @@ export default {
          * @param formCfg
          */
         onFormSelected({ id, name }): void {
-            this.$refs.SelectForm.isShowListModal = false;
+            // this.$refs.SelectForm.isShowListModal = false;
+            this.isShowListModal = false;
 
             let cfg: ListFactory_ListConfig_New = this.cfg;
             cfg.bindingFormId = id;

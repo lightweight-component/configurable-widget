@@ -55,6 +55,7 @@ export default {
             });
         },
         renderConfig(cfg: ListFactory_ListConfig_New): void {
+            this.bindingFormId = cfg.bindingFormId;
             this.listApiUrl_ = cfg.httpApi.replace('{project_prefix}', window.config.IAM_ApiRoot);
             let colDefs: TableColumn[] = cfg.colConfig;
             this.list.columns = [];

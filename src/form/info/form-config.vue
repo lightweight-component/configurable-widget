@@ -76,22 +76,11 @@
 </template>
 
 <script lang="ts">
-import ListSelector from "../../widget/list-selector.vue";
-// import ApiBinding from "../../widget/api-binding.vue";
-
 export default {
-  components: { ListSelector, /* ApiBinding */ },
   props: {
     cfg: Object,
     apiRoot: { type: String, required: true }, // API 选择器需要这个属性
-  },
-  data() {
-    return {};
-  },
-  methods: {},
-  mounted() {
-    // debugger
-  },
+  }
 };
 </script>
 

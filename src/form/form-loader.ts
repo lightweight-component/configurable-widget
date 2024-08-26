@@ -40,7 +40,7 @@ export default {
                     this.cfg = j.data.config;
 
                     let cfg: FormFactory_Config = this.cfg;
-                    let isJsonBased = cfg.jsonBased.isJsonBased;
+                    let isJsonBased = cfg.jsonBased && cfg.jsonBased.isJsonBased;
                     let dataBinding: DataBinding = cfg.dataBinding;
 
                     if (isJsonBased) {
