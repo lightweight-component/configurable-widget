@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FastTable widget-name="表单定义" :list-api-url="API" :columns-def="list.columns" create-route="form-info" edit-route="form-info">
+    <FastTable widget-name="表单定义" :list-api-url="initApi" :columns-def="list.columns" create-route="form-info" edit-route="form-info">
       <template v-slot:list_action="item">
         <a @click="openDemo(item.item)">预览</a>
         <Divider type="vertical" />
@@ -24,11 +24,14 @@ import { dateFormat } from '@ajaxjs/util/dist/util/utils';
  */
 export default {
   components: { FastTable, FormLoader },
+  props: {
+    initApi: { type: String, required: true },
+  },
   data() {
     return {
       perview: { isShow: false, title: "", data: {} },
       // @ts-ignore
-      API: this.api || `${window.config.dsApiRoot}/common_api/widget_config/page?q_type=FORM_DEF`,
+      // API: `${window.config.dsApiRoot}/common_api/widget_config/page?q_type=FORM_DEF`,
       list: {
         columns: [
           List.id,

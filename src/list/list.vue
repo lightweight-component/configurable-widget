@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FastTable widget-name="列表定义" :list-api-url="API" :columns-def="list.columns" create-route="list-info" edit-route="list-info">
+    <FastTable widget-name="列表定义" :list-api-url="initApi" :columns-def="list.columns" create-route="list-info" edit-route="list-info">
       <template v-slot:list_action="item">
         <a @click="openDemo(item.item)">预览</a>
         <Divider type="vertical" />
@@ -26,18 +26,19 @@ import FastTable from "../widget/fast-iview-table.vue";
 //import FastTable from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/fast-iview-table.vue';
 import List from "@ajaxjs/ui/dist/iView-ext/fast-iview-table/list";
 import ListLoader from "./list-loader.vue";
-import { dateFormat } from '@ajaxjs/util/dist/util/utils';
+import { dateFormat } from "@ajaxjs/util/dist/util/utils";
 
 /**
  * 管理界面列表
  */
 export default {
   components: { FastTable, ListLoader },
+  props: {
+    initApi: { type: String, required: true },
+  },
   data() {
     return {
       perview: { isShow: false, title: "", data: {} },
-      // @ts-ignore
-      API: this.api || `${window.config.dsApiRoot}/common_api/widget_config/page?q_type=LIST_DEF`,
       list: {
         columns: [
           List.id,
@@ -51,7 +52,7 @@ export default {
           {
             title: "关联表单",
             render(h: Function, params: any) {
-               return h("span", params.row.config.bindingFormName);
+              return h("span", params.row.config.bindingFormName);
               // if (params.row.datasourceName)
               //   return h("span",
               //     params.row.datasourceName + "/" + params.row.tableName
@@ -62,16 +63,26 @@ export default {
             ellipsis: true,
           },
           {
-              title: '接口地址', minWidth: 250, render: (h: Function, params: any) => h('span', params.row.config.httpApi),
-              ellipsis: true, tooltip: true
+            title: "接口地址",
+            minWidth: 250,
+            render: (h: Function, params: any) =>
+              h("span", params.row.config.httpApi),
+            ellipsis: true,
+            tooltip: true,
           },
           {
-              title: "修改日期",
-              width: 160,
-              align: "center",
-              render(h: Function, params: any) {
-                return h("div", dateFormat.call( new Date(params.row.updateDate), "yyyy-MM-dd hh:mm"));
-              },
+            title: "修改日期",
+            width: 160,
+            align: "center",
+            render(h: Function, params: any) {
+              return h(
+                "div",
+                dateFormat.call(
+                  new Date(params.row.updateDate),
+                  "yyyy-MM-dd hh:mm"
+                )
+              );
+            },
           },
           List.createDate,
           List.status,

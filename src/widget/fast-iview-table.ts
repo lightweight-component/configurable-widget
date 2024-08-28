@@ -47,7 +47,7 @@ export default {
             // if (this.list.search.name)
             //     params.where = `name LIKE '%${this.list.search.name}%'`;
 
-            xhr_get(this.listApiUrl_, (j: RepsonseResult) => {
+            this.listApiUrl_ && xhr_get(this.listApiUrl_, (j: RepsonseResult) => {
                 this.list.loading = false;
 
                 if (j.status) {
@@ -105,6 +105,12 @@ export default {
         }
     },
     watch: {
+        // listApiUrl(v): void {
+        //     debugger
+        //     console.log(v)
+        //     this.getData();
+        // },
+
         /**
          * 分页
          * 

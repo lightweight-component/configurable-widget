@@ -14,6 +14,7 @@ export default {
         editRoute: { type: String, required: false },       // 编辑事件触发时候，进入的路由地址
         defaultAction: { type: Boolean, required: false, default: true },
         showSearch: { type: Boolean, required: false, default: true },
+        modalInfo: { type: Boolean, required: false, default: true }, // 是否弹窗显示详情，false 为进入新页面
     },
     data() {
         return {
@@ -132,8 +133,16 @@ export default {
                 this.$parent.edit(id);
             } else {
                 this.isShowForm = true;
-                this.$refs.FormLoader.formId = this.bindingFormId;
-                this.$refs.FormLoader.load();
+
+                if (!this.modalInfo) {
+                    setTimeout(() => {
+                        this.$refs.FormLoader2a.formId = this.bindingFormId;
+                        this.$refs.FormLoader2a.load();
+                    });
+                } else {
+                    this.$refs.FormLoader.formId = this.bindingFormId;
+                    this.$refs.FormLoader.load();
+                }
             }
         }
     },

@@ -87,8 +87,8 @@ export default {
          * 新增
          */
         addRow_(row: any): void {
-            this.cfg.fields.push(row);
-            this.editIndex = this.cfg.fields.length - 1;
+            this.$refs.configTable.fields.push(row);
+            this.editIndex = this.$refs.configTable.fields.length - 1;
             let container = this.$el.querySelector('.content-panel');
             setTimeout(() => container.scrollTop = container.scrollHeight, 200); // 滚动到底部
         },

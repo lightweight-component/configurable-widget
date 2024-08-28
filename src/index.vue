@@ -11,8 +11,8 @@
         <h1 v-if="widgetType == 'formDef'">表单定义</h1>
       </div>
 
-      <list v-if="widgetType == 'listDef'" />
-      <Form v-if="widgetType == 'formDef'" />
+      <list :init-api="api" v-if="widgetType == 'listDef'" />
+      <Form :init-api="api" v-if="widgetType == 'formDef'" />
       <project ref="project" />
     </div>
   </Split>
@@ -40,16 +40,24 @@ export default {
     return {
       split: 0.16,
       widgetType: "listDef",
+      api: "",
     };
   },
   methods: {
     openLeft(a, data) {
+      // debugger;
+      let perfix = data.parentNode.apiPrefixDev;
+
       switch (data.title) {
         case "表单定义":
           this.widgetType = "formDef";
+          this.api = perfix + "/common_api/widget_config/page?q_type=FORM_DEF";
+
           break;
         case "列表定义":
           this.widgetType = "listDef";
+          this.api = perfix + "/common_api/widget_config/page?q_type=LIST_DEF";
+
           break;
       }
     },
