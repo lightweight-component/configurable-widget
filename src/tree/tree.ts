@@ -53,7 +53,6 @@ export default {
                         };
 
                         this.loadTreeProejct(isDebug() ? project.apiPrefixDev : project.apiPrefixProd, projectTreeNode)
-
                         data.push(projectTreeNode);
                     });
 
@@ -71,7 +70,11 @@ export default {
         loadTreeProejct(apiPrefix: string, projectTreeNode: DS_TreeNode_Project): void {
             xhr_get(`${apiPrefix}/common_api/common_api/list`, (j: RepsonseResult) => {
                 if (j.status) {
-                    let base: any = { title: '表单定义', contextmenu: false, parentNode: projectTreeNode.projectData, render: renderCrudTreeNode };
+                    let base: any = {
+                        title: '表单定义',
+                        selected: false,
+                        contextmenu: false, parentNode: projectTreeNode.projectData, render: renderCrudTreeNode
+                    };
                     let data = [
                         { ...base, title: "表单定义" },
                         { ...base, title: "列表定义" }

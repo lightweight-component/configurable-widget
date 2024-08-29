@@ -9,6 +9,7 @@ export default {
     data() {
         return {
             id: this.initId || 0,
+            apiPrefix: this.$route.query.apiPrefix,
             name: '',
             isShowPerview: false,
             datasourceId: 0,    // 关联的数据源 id。不是数据绑定，没什么约束力，只是参考用
@@ -31,7 +32,7 @@ export default {
          * 获取单个数据
          */
         getDataBase(cb: Function): void {
-            xhr_get(`${this.API}/${this.id}`, (j: RepsonseResult) => {
+            xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.id}`, (j: RepsonseResult) => {
                 let r: any = j.data;
 
                 if (r) {
@@ -67,17 +68,17 @@ export default {
             if (this.id) {
                 valueObj.id = this.id;
 
-                xhr_put(this.API, (j: RepsonseResult) => {
+                xhr_put(`${this.apiPrefix}/common_api/widget_config`, (j: RepsonseResult) => {
                     if (j.status)
                         this.$Message.success('修改成功');
                     else
                         this.$Message.warning(j.message);
                 }, valueObj);
             } else
-                xhr_post(this.API, (j: RepsonseResult) => {
+                xhr_post(`${this.apiPrefix}/common_api/widget_config`, (j: RepsonseResult) => {
                     if (j.status) {
                         this.$Message.success('创建成功');
-                        setTimeout(() => this.id = j.newlyId, 800);
+                        setTimeout(() => this.id = j.data, 800);
                     } else
                         this.$Message.warning(j.message);
                 }, valueObj);
@@ -97,7 +98,8 @@ export default {
          * 保存新增
          */
         saveAddRow_(s1: string, s2: string): void {
-            let lastRow: any = this.cfg.fields[this.cfg.fields.length - 1];
+            let fields: [] = this.$refs.configTable.fields;
+            let lastRow: any = fields[fields.length - 1];
 
             if (!lastRow[s1] || !lastRow[s2]) {
                 this.$Message.error('请填写完整内容');
@@ -130,10 +132,8 @@ export default {
             if (id) {
                 this.id = Number(id);
                 this.getData();
-            } else {
-                // 新建
-                this.emptyData();
-            }
+            } else
+                this.emptyData();// 新建
         }
     }
 }

@@ -11,8 +11,8 @@
         <h1 v-if="widgetType == 'formDef'">表单定义</h1>
       </div>
 
-      <list :init-api="api" v-if="widgetType == 'listDef'" />
-      <Form :init-api="api" v-if="widgetType == 'formDef'" />
+      <list :init-api="api" :api-prefix="apiPrefix" v-if="widgetType == 'listDef'" />
+      <Form :init-api="api" :api-prefix="apiPrefix" v-if="widgetType == 'formDef'" />
       <project ref="project" />
     </div>
   </Split>
@@ -41,12 +41,13 @@ export default {
       split: 0.16,
       widgetType: "listDef",
       api: "",
+      apiPrefix: "sssssss",
     };
   },
   methods: {
     openLeft(a, data) {
-      // debugger;
       let perfix = data.parentNode.apiPrefixDev;
+      this.apiPrefix = perfix;
 
       switch (data.title) {
         case "表单定义":

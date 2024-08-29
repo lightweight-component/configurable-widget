@@ -10,6 +10,7 @@ declare const window: Window & {
 export default {
     components: { FormLoader },
     props: {
+        apiPrefix: { type: String, required: true },     // API 前缀
         createRoute: { type: String, required: false },     // 新建事件触发时候，进入的路由地址
         editRoute: { type: String, required: false },       // 编辑事件触发时候，进入的路由地址
         defaultAction: { type: Boolean, required: false, default: true },
@@ -45,7 +46,8 @@ export default {
          * 加载列定义
          */
         getRemoteColDef(): void {
-            xhr_get(`${window.config.dsApiRoot}/common_api/widget_config/${this.colDefId}`, (j: RepsonseResult) => {
+            
+            xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.colDefId}`, (j: RepsonseResult) => {
                 this.list.loading = false;
 
                 if (j.status) {
@@ -57,7 +59,7 @@ export default {
         },
         renderConfig(cfg: ListFactory_ListConfig_New): void {
             this.bindingFormId = cfg.bindingFormId;
-            this.listApiUrl_ = cfg.httpApi.replace('{project_prefix}', window.config.IAM_ApiRoot);
+            this.listApiUrl_ = cfg.httpApi.replace('{project_prefix}', this.apiPrefix);
             let colDefs: TableColumn[] = cfg.colConfig;
             this.list.columns = [];
 

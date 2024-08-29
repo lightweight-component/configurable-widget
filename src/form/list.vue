@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FastTable widget-name="表单定义" :list-api-url="initApi" :columns-def="list.columns" create-route="form-info" edit-route="form-info">
+    <FastTable widget-name="表单定义" :list-api-url="initApi" :api-url="apiPrefix + '/common_api/widget_config/'" :columns-def="list.columns">
       <template v-slot:list_action="item">
         <a @click="openDemo(item.item)">预览</a>
         <Divider type="vertical" />
@@ -8,7 +8,7 @@
     </FastTable>
 
     <Modal v-model="perview.isShow" title="预览" width="1200" ok-text="关闭" cancel-text="">
-      <FormLoader ref="preview" />
+      <FormLoader ref="preview" :api-prefix="apiPrefix" />
     </Modal>
   </div>
 </template>
@@ -17,7 +17,7 @@
 import FastTable from "../widget/fast-iview-table.vue";
 import List from "@ajaxjs/ui/dist/iView-ext/fast-iview-table/list";
 import FormLoader from "./form-loader.vue";
-import { dateFormat } from '@ajaxjs/util/dist/util/utils';
+import { dateFormat } from "@ajaxjs/util/dist/util/utils";
 
 /**
  * 管理界面列表
@@ -25,6 +25,7 @@ import { dateFormat } from '@ajaxjs/util/dist/util/utils';
 export default {
   components: { FastTable, FormLoader },
   props: {
+    apiPrefix: { type: String, required: true }, // API 前缀
     initApi: { type: String, required: true },
   },
   data() {
@@ -56,12 +57,18 @@ export default {
             ellipsis: true,
           },
           {
-              title: "修改日期",
-              width: 160,
-              align: "center",
-              render(h: Function, params: any) {
-                return h("div", dateFormat.call( new Date(params.row.updateDate), "yyyy-MM-dd hh:mm"));
-              },
+            title: "修改日期",
+            width: 160,
+            align: "center",
+            render(h: Function, params: any) {
+              return h(
+                "div",
+                dateFormat.call(
+                  new Date(params.row.updateDate),
+                  "yyyy-MM-dd hh:mm"
+                )
+              );
+            },
           },
           List.createDate,
           List.status,
@@ -81,6 +88,21 @@ export default {
       this.$refs.preview.formId = item.id;
       this.$refs.preview.load();
       this.perview.isShow = true;
+    },
+    onCreate(): void {
+      this.$router.push({
+        path: "form-info",
+        query: { apiPrefix: this.apiPrefix },
+      }); // 进入详情页
+    },
+    /**
+     * 编辑
+     */
+    onEdit(id: number): void {
+      this.$router.push({
+        path: "form-info",
+        query: { id, apiPrefix: this.apiPrefix },
+      }); // 进入详情页，采用相对路径
     },
   },
 };

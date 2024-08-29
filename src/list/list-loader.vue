@@ -36,12 +36,12 @@
     </span>
 
     <Modal v-if="modalInfo" v-model="isShowForm" title="预览" width="800" ok-text="关闭" cancel-text="">
-      <FormLoader ref="FormLoader" />
+      <FormLoader ref="FormLoader" :api-prefix="apiPrefix" /> 
     </Modal> 
 
     <span v-if="!modalInfo && isShowForm">
       <a href="#" @click="isShowForm = false">返回列表</a>
-      <FormLoader ref="FormLoader2a" style="width:1200px;margin: 0 auto;" />
+      <!-- <FormLoader ref="FormLoader2a" :api-prefix="apiPrefix" style="width:1200px;margin: 0 auto;" /> -->
     </span>
   </div>
 </template>

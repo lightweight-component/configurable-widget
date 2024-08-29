@@ -6,6 +6,7 @@ export default {
     components: { FromRenderer },
     props: {
         // formId: { type: Number, required: false }, // 表单配置 id
+        apiPrefix: { type: String, required: false },     // API 前缀
         isShowBtns: { type: Boolean, required: false, default: true }, // 是否显示按钮，还是自定义按钮？
     },
     data() {
@@ -35,7 +36,7 @@ export default {
                 this.$refs.FromRenderer.data = {};
             }
 
-            xhr_get(`${window["config"].dsApiRoot}/common_api/widget_config/${this.formId}`, (j: RepsonseResult) => {
+            xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.formId}`, (j: RepsonseResult) => {
                 if (j && j.status) {
                     this.cfg = j.data.config;
 

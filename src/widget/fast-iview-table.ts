@@ -1,5 +1,5 @@
-import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
-import CellRender from '../list/renderer/list-cell-render';
+import List from '@ajaxjs/ui/dist/iView-ext/fast-iview-table/list';
+import { xhr_get, xhr_del } from '@ajaxjs/util/dist/util/xhr';
 
 // 声明 window.config 并为其指定类型
 declare const window: Window & {
@@ -75,14 +75,14 @@ export default {
         /**
          * 新建
          */
-        onCreate(id: number): void {
+        onCreate(): void {
             if (this.createRoute)
                 this.$router.push({ path: this.createRoute }); // 进入详情页，采用相对路径
             else {
                 if (!this.$parent.onCreate)
                     throw '请设置父组件的 onCreate 事件处理器';
 
-                this.$parent.edit(id);
+                this.$parent.onCreate();
             }
         },
 
@@ -96,20 +96,28 @@ export default {
                 if (!this.$parent.onEdit)
                     throw '请设置父组件的 onEdit 事件处理器';
 
-                this.$parent.edit(id);
+                this.$parent.onEdit(id);
             }
         },
 
         doPickup(data: any): void {
             this.$emit("on-select", data);
-        }
+        },
+        deleteInfo(id: number, index: number): void {
+            this.list.loading = true;
+            xhr_del(`${this.apiUrl}/${id}`, List.afterDelete(() => {
+                this.list.data.splice(index, 1);
+                this.list.total--;
+                this.list.loading = false;
+            }).bind(this));
+        },
     },
     watch: {
-        // listApiUrl(v): void {
-        //     debugger
-        //     console.log(v)
-        //     this.getData();
-        // },
+        listApiUrl(v: string): void {
+            // debugger
+            this.listApiUrl_ = v;
+            this.getData();
+        },
 
         /**
          * 分页

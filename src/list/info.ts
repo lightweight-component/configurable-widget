@@ -19,15 +19,12 @@ export default {
 
         return {
             widgetType: 'LIST_DEF',
-            // @ts-ignore
-            API: this.api || `${config.dsApiRoot}/common_api/widget_config`,
             initTableData: [], // 预览用的表格数据
             rendererColDef: [] as iViewTableColumn[], // 渲染器的列定义
             selectedTable: {} as SelectedTable,
             searchFields: [],
             isShowListModal: false,
-            // @ts-ignore
-            formListApi: `${window.config.dsApiRoot}/common_api/widget_config/page?q_type=FORM_DEF`,
+            formListApi: `${this.$route.query.apiPrefix}/common_api/widget_config/page?q_type=FORM_DEF`,
             // cfg: {
             //     isPage: true,
             //     page: 2,
@@ -59,7 +56,7 @@ export default {
                     tooltip: true,
                 },
                 {
-     
+
                     title: "选择",
                     minWidth: 50,
                     slot: 'action'
@@ -111,6 +108,7 @@ export default {
         emptyData(): void {
             this.name = '';
             this.cfg = { page: 1, colConfig: [] };
+            this.$refs.configTable.fields = [];
         },
 
         /**

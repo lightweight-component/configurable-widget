@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FastTable widget-name="列表定义" :list-api-url="initApi" :columns-def="list.columns" create-route="list-info" edit-route="list-info">
+    <FastTable widget-name="列表定义" :list-api-url="initApi" :api-url="apiPrefix + '/common_api/widget_config/'" :columns-def="list.columns">
       <template v-slot:list_action="item">
         <a @click="openDemo(item.item)">预览</a>
         <Divider type="vertical" />
@@ -15,7 +15,7 @@
     </FastTable>
 
     <Modal v-model="perview.isShow" title="预览" width="1200" ok-text="关闭" cancel-text="">
-      <ListLoader ref="listDefDemo" />
+      <ListLoader ref="listDefDemo" :api-prefix="apiPrefix" />
     </Modal>
   </div>
 </template>
@@ -34,6 +34,7 @@ import { dateFormat } from "@ajaxjs/util/dist/util/utils";
 export default {
   components: { FastTable, ListLoader },
   props: {
+    apiPrefix: { type: String, required: true }, // API 前缀
     initApi: { type: String, required: true },
   },
   data() {
@@ -101,6 +102,23 @@ export default {
     openDemo(item: any): void {
       this.$refs.listDefDemo.colDefId = item.id;
       this.perview.isShow = true;
+    },
+
+    onCreate(): void {
+      this.$router.push({
+        path: "list-info",
+        query: { apiPrefix: this.apiPrefix }
+      }); // 进入详情页
+    },
+
+    /**
+     * 编辑
+     */
+    onEdit(id: number): void {
+      this.$router.push({
+        path: "list-info",
+        query: { id, apiPrefix: this.apiPrefix }
+      }); // 进入详情页，采用相对路径
     },
   },
 };

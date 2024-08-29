@@ -122,6 +122,7 @@ export default {
         emptyData(): void {
             this.name = '';
             this.cfg = { fields: [] };
+            this.$refs.configTable.fields = [];
         },
 
         /**
