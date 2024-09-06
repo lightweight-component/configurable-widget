@@ -16,23 +16,22 @@
           </FormItem>
           </Col>
           <FormItem label="Label 宽度"><Input type="number" v-model="cfg.labelWidth" :number="true" /></FormItem>
-        </Row>
+        </Row> 
       </Form>
     </TabPane>
 
     <TabPane label="数据绑定">
-      <Form :label-width="120" label-colon>
-        <Divider size="small">获取记录接口</Divider>
-
-       <!--  <ApiBinding :cfg="cfg.dataBinding" /> -->
-        <FormItem label="RESTful 创建/更新接口">
-          <i-Switch v-model="cfg.isRESTful_writeApi" />
+      <Form :label-width="120" style="width:500px;margin:50px auto">
+       <FormItem label="获取记录接口">
+          <Input v-model="cfg.infoApi" />
         </FormItem>
-
-        <Divider size="small">更新记录接口</Divider>
-      <!--   <ApiBinding :cfg="cfg.updateApi" /> -->
-
-        <Divider size="small" v-if="cfg.isRESTful_writeApi">创建记录接口</Divider>
+        <FormItem label="创建记录接口">
+          <Input v-model="cfg.createApi" />
+        </FormItem>
+        <FormItem label="更新记录接口">
+          <Input v-model="cfg.editApi" /><!-- updateApi get errors, odd -->
+        </FormItem>
+        <!-- <Divider size="small" v-if="cfg.isRESTful_writeApi">创建记录接口</Divider> -->
      <!--    <ApiBinding v-if="!cfg.isRESTful_writeApi" :cfg="cfg.createApi" /> -->
       </Form>
     </TabPane>

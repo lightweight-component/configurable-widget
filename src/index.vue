@@ -11,7 +11,7 @@
         <h1 v-if="widgetType == 'formDef'">表单定义</h1>
       </div>
 
-      <list :init-api="api" :api-prefix="apiPrefix" v-if="widgetType == 'listDef'" />
+      <List :init-api="api" :api-prefix="apiPrefix" v-if="widgetType == 'listDef'" />
       <Form :init-api="api" :api-prefix="apiPrefix" v-if="widgetType == 'formDef'" />
       <project ref="project" />
     </div>
@@ -19,14 +19,14 @@
 </template>
 
 <script>
-import List from "./list/list";
-import Form from "./form/list";
 import leftTree from "./tree/tree.vue";
-import user from "@ajaxjs/ui/dist/iam/user.vue";
-import aj from "@ajaxjs/ui/dist/";
+import UI from "@ajaxjs/ui";
+import List from "./list/list.vue";
+import Form from "./form/list.vue";
 import project from "./project/project.vue";
 
-aj.IAM.getLoginInfo(window.config.loginUrl, window.config.thisPageUrl);
+UI.IAM.getLoginInfo(window.config.loginUrl, window.config.thisPageUrl);
+const user = UI.IamUser;
 
 export default {
   components: {

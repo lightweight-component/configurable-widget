@@ -1,4 +1,4 @@
-import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
+import { Xhr } from "@ajaxjs/util";
 
 export default {
     props: {
@@ -35,7 +35,7 @@ export default {
         getDatasource(): void {
             let params: any = { start: 0, limit: 999 };
 
-            xhr_get(this.API, (j: RepsonseResult) => {
+            Xhr.xhr_get(this.API, (j: RepsonseResult) => {
                 if (j.status) {
                     this.datasource.list = j.data;
                     
@@ -55,7 +55,7 @@ export default {
             if (this.database.isShow)
                 url += '?dbName=' + this.database.name;
 
-            xhr_get(url, (j: RepsonseResult) => {
+            Xhr.xhr_get(url, (j: RepsonseResult) => {
                 if (j.status) {
                     let arr: any[] = j.data as any[];
                     arr.sort(sortFn);
@@ -77,7 +77,7 @@ export default {
             if (this.database.isShow)
                 url += '?dbName=' + this.database.name;
 
-            xhr_get(url, (j: RepsonseResult) => {
+            Xhr.xhr_get(url, (j: RepsonseResult) => {
                 if (j.status) {
                     let arr: any[] = j.data as any[];
                     arr.sort(sortFn);
@@ -124,7 +124,7 @@ export default {
             this.fields.forEach((item: CheckableDataBaseColumnMeta) => item.checked = true);
         },
         getDatabase(id: number): void {
-            xhr_get(this.API + '/../data_service/getDatabases', (j: RepsonseResult) => {
+            Xhr.xhr_get(this.API + '/../data_service/getDatabases', (j: RepsonseResult) => {
                 if (j.status) {
                     this.database.list = j.data;
                     this.database.name = this.database.list[0]; // 默认显示第一个数据库的

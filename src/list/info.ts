@@ -2,7 +2,7 @@ import ListRenderer from './renderer/list-factory-renderer.vue';
 import Fields2Cfg from './renderer/fields-to-cfg';
 import CellRender from './renderer/list-cell-render';
 import MoreAttrib from './list-more-attrib.vue';
-import FormListSelector from "../widget/fast-iview-table.vue";
+import { FastViewTable as FormListSelector } from "@ajaxjs/ui";
 import FormLoader from "../form/form-loader.vue";
 import ConfigTable from '../common/config-table.vue';
 import InfoMixins from '../common/info-common';

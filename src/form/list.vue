@@ -1,11 +1,11 @@
 <template>
   <div>
-    <FastTable widget-name="表单定义" :list-api-url="initApi" :api-url="apiPrefix + '/common_api/widget_config/'" :columns-def="list.columns">
+    <FastViewTable widget-name="表单定义" :list-api-url="initApi" :api-url="apiPrefix + '/common_api/widget_config/'" :columns-def="list.columns">
       <template v-slot:list_action="item">
         <a @click="openDemo(item.item)">预览</a>
         <Divider type="vertical" />
       </template>
-    </FastTable>
+    </FastViewTable>
 
     <Modal v-model="perview.isShow" title="预览" width="1200" ok-text="关闭" cancel-text="">
       <FormLoader ref="preview" :api-prefix="apiPrefix" />
@@ -14,16 +14,17 @@
 </template>
 
 <script lang="ts">
-import FastTable from "../widget/fast-iview-table.vue";
-import List from "@ajaxjs/ui/dist/iView-ext/fast-iview-table/list";
+import UI from "@ajaxjs/ui";
 import FormLoader from "./form-loader.vue";
-import { dateFormat } from "@ajaxjs/util/dist/util/utils";
+import { Utils } from "@ajaxjs/util";
+
+const FastViewTable = UI.FastViewTable;
 
 /**
  * 管理界面列表
  */
 export default {
-  components: { FastTable, FormLoader },
+  components: { FastViewTable, FormLoader },
   props: {
     apiPrefix: { type: String, required: true }, // API 前缀
     initApi: { type: String, required: true },
@@ -35,7 +36,7 @@ export default {
       // API: `${window.config.dsApiRoot}/common_api/widget_config/page?q_type=FORM_DEF`,
       list: {
         columns: [
-          List.id,
+          UI.List.id,
           {
             title: "列表名称",
             key: "name",
@@ -63,15 +64,15 @@ export default {
             render(h: Function, params: any) {
               return h(
                 "div",
-                dateFormat.call(
+                Utils.dateFormat.call(
                   new Date(params.row.updateDate),
                   "yyyy-MM-dd hh:mm"
                 )
               );
             },
           },
-          List.createDate,
-          List.status,
+          UI.List.createDate,
+          UI.List.status,
           { title: "操作", slot: "action", align: "center", width: 260 },
         ],
       },

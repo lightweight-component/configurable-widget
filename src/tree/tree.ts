@@ -1,5 +1,4 @@
-import { xhr_get, xhr_del } from '@ajaxjs/util/dist/util/xhr';
-import { isDebug } from '@ajaxjs/util/dist/util/utils';
+import { Xhr, Utils } from "@ajaxjs/util";
 
 declare const window: Window & {
     config: ConfigInterface;
@@ -37,7 +36,7 @@ export default {
 
         // 异步加载树数据
         loadTreeData(item: null, callback: Function): void {
-            xhr_get(`${window.config.dsApiRoot}/common_api/project/list`, (j: RepsonseResult) => {
+            Xhr.xhr_get(`${window.config.dsApiRoot}/common_api/project/list`, (j: RepsonseResult) => {
                 if (j.status) {
                     let data: DS_TreeNode_Project[] = [];
 
@@ -52,7 +51,7 @@ export default {
                             render: renderProjectTreeNode
                         };
 
-                        this.loadTreeProejct(isDebug() ? project.apiPrefixDev : project.apiPrefixProd, projectTreeNode)
+                        this.loadTreeProejct(Utils.isDebug() ? project.apiPrefixDev : project.apiPrefixProd, projectTreeNode)
                         data.push(projectTreeNode);
                     });
 
@@ -68,7 +67,7 @@ export default {
          * @param projectTreeNode 
          */
         loadTreeProejct(apiPrefix: string, projectTreeNode: DS_TreeNode_Project): void {
-            xhr_get(`${apiPrefix}/common_api/common_api/list`, (j: RepsonseResult) => {
+            Xhr.xhr_get(`${apiPrefix}/common_api/common_api/list`, (j: RepsonseResult) => {
                 if (j.status) {
                     let base: any = {
                         title: '表单定义',

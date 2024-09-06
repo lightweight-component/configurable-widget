@@ -1,15 +1,15 @@
 <template>
   <Form :label-width="100" style="padding:0 10% 0 0" label-colon>
-     <Row>
+    <Row>
       <Col span="12">
       <FormItem label="是否禁用">
-        <i-Switch v-model="row.ext_attribs.disabled" />
+        <i-Switch v-model="extAttribs.disabled" />
         &nbsp;<Tooltip content="disabled 设置输入框为禁用状态" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
       </FormItem>
       </Col>
       <Col span="12">
       <FormItem label="是否只读">
-        <i-Switch v-model="row.ext_attribs.isReadonly" />
+        <i-Switch v-model="extAttribs.isReadonly" />
         &nbsp;<Tooltip content="readonly 设置输入框为只读" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
       </FormItem>
       </Col>
@@ -19,7 +19,7 @@
     <Row v-if="isInput()">
       <Col span="12">
       <FormItem label="最大长度">
-        <Input type="text" class="more-attrib input small" v-model="row.ext_attribs.maxlength" placeholder="最大输入长度" /> &nbsp;
+        <Input type="text" class="more-attrib input small" v-model="extAttribs.maxlength" placeholder="最大输入长度" /> &nbsp;
         <Tooltip content="maxlength 最大输入长度" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
       </FormItem>
       </Col>
@@ -30,14 +30,14 @@
     <Row v-if="isInput()">
       <Col span="12">
       <FormItem label="清空按钮">
-        <i-Switch v-model="row.ext_attribs.clearable" />
+        <i-Switch v-model="extAttribs.clearable" />
         &nbsp;<Tooltip content="clearable 是否显示清空按钮" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
       </FormItem>
       </Col>
-      
+
       <Col span="12">
       <FormItem label="显示边框">
-        <i-Switch v-model="row.ext_attribs.border" />
+        <i-Switch v-model="extAttribs.border" />
         &nbsp;<Tooltip content="border 是否显示边框" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
       </FormItem>
       </Col>
@@ -58,33 +58,33 @@
 
     <!-- 密码输入框 -->
     <FormItem v-if="row.uiType == 18" label="允许显示/隐藏密码">
-      <Switch v-model="row.ext_attribs.password" />
+      <Switch v-model="extAttribs.password" />
       &nbsp;<Tooltip content="开启属性 password 可以切换显示隐藏密码" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
     </FormItem>
 
     <!-- 多行文本 -->
     <FormItem v-if="row.uiType == 6" label="行数/高度">
-      <Input type="number" class="more-attrib input small" v-model="row.ext_attribs.rows" placeholder="文本域默认行数" />&nbsp;
+      <Input type="number" class="more-attrib input small" v-model="extAttribs.rows" placeholder="文本域默认行数" />&nbsp;
       <Tooltip content="rows 文本域默认行数" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
     </FormItem>
 
     <Row v-if="row.uiType == 6">
       <Col span="12">
       <FormItem label="字数统计">
-        <Switch v-model="row.ext_attribs.showWordLimit" />&nbsp;
+        <Switch v-model="extAttribs.showWordLimit" />&nbsp;
         <Tooltip content="show-word-limit 是否显示输入字数统计，可以配合 maxlength 使用" placement="right" :transfer="true"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
       </FormItem>
       </Col>
       <Col span="12">
       <FormItem label="自适应内容高度">
-        <Switch v-model="row.ext_attribs.autosize" />&nbsp;
+        <Switch v-model="extAttribs.autosize" />&nbsp;
         <Tooltip content="autosize 自适应内容高度" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
       </FormItem>
       </Col>
     </Row>
 
     <FormItem v-if="row.uiType == 6" label="行数/高度">
-      <Input type="number" class="more-attrib input small" v-model="row.ext_attribs.rows" placeholder="文本域默认行数" />&nbsp;
+      <Input type="number" class="more-attrib input small" v-model="extAttribs.rows" placeholder="文本域默认行数" />&nbsp;
       <Tooltip content="rows 文本域默认行数" placement="right"><i class="ivu-icon ivu-icon-ios-help-circle-outline"></i></Tooltip>
     </FormItem>
 
@@ -92,7 +92,6 @@
     <FormItem v-if="row.uiType == 2 || row.uiType == 3 || row.uiType == 4" label="候选数据">
       <CandidateData ref="CandidateData" />
     </FormItem>
-
   </Form>
 </template>
 
@@ -109,21 +108,27 @@ export default {
         return { ext_attribs: {} };
       },
     },
+    extAttribs: {
+      type: Object,
+      required: true,
+      default() {
+        return { ext_attribs: {} };
+      },
+    },
   },
   methods: {
     // edit(row: any): void {
-    //   if (!row.ext_attribs) 
-    //     row.ext_attribs = {};
+    //   if (!extAttribs)
+    //     extAttribs = {};
 
     //   this.row = row;
 
-
     //   this.$nextTick(() => {
     //     if (row.uiType == 2 || row.uiType == 3 || row.uiType == 4) {
-    //       if (!row.ext_attribs.candidateData)
-    //         row.ext_attribs.candidateData = [];
+    //       if (!extAttribs.candidateData)
+    //         extAttribs.candidateData = [];
 
-    //       this.$refs.CandidateData.staticData = row.ext_attribs;
+    //       this.$refs.CandidateData.staticData = extAttribs;
     //       // console.log(this.$refs.CandidateData.staticData);
     //     }
     //   });
@@ -146,23 +151,23 @@ export default {
     },
   },
   watch: {
-    row(row) {
-      // debugger
-      if (!row.ext_attribs) 
-        row.ext_attribs = { disabled: false};
-      
-      this.$nextTick(() => {
-        if (row.uiType == 2 || row.uiType == 3 || row.uiType == 4) {
-          if (!row.ext_attribs.candidateData)
-            row.ext_attribs.candidateData = [];
+    row: {
+      handler(extAttribs, oldValue) {
 
-          this.$refs.CandidateData.staticData = row.ext_attribs;
-          // console.log(this.$refs.CandidateData.staticData);
-        }
-      });
-      // if (!v.ext_attribs.hasOwnProperty("placeholder")) {
-      //   v.ext_attribs.placeholder = "";
-      // }
+        this.$nextTick(() => {
+          // if (row.uiType == 2 || row.uiType == 3 || row.uiType == 4) {
+          //   if (!extAttribs.candidateData)
+          //     extAttribs.candidateData = [];
+
+            // this.$refs.CandidateData.staticData = extAttribs;
+            // console.log(this.$refs.CandidateData.staticData);
+          // }
+        });
+        // if (!v.ext_attribs.hasOwnProperty("placeholder")) {
+        //   v.ext_attribs.placeholder = "";
+        // }
+      },
+      deep: true, // 深度观察
     },
   },
 };

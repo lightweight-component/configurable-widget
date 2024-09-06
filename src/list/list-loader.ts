@@ -1,4 +1,4 @@
-import { xhr_get } from '@ajaxjs/util/dist/util/xhr';
+import { Xhr } from "@ajaxjs/util";
 import CellRender from '../list/renderer/list-cell-render';
 import FormLoader from "../form/form-loader.vue";
 
@@ -46,8 +46,7 @@ export default {
          * 加载列定义
          */
         getRemoteColDef(): void {
-            
-            xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.colDefId}`, (j: RepsonseResult) => {
+            Xhr.xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.colDefId}`, (j: RepsonseResult) => {
                 this.list.loading = false;
 
                 if (j.status) {
@@ -85,7 +84,7 @@ export default {
             // if (this.list.search.name)
             //     params.where = `name LIKE '%${this.list.search.name}%'`;
 
-            xhr_get(this.listApiUrl_, (j: RepsonseResult) => {
+            Xhr.xhr_get(this.listApiUrl_, (j: RepsonseResult) => {
                 this.list.loading = false;
 
                 if (j.status) {

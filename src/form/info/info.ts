@@ -3,7 +3,7 @@ import MoreAttrib from './form-more-attrib.vue';
 import ConfigPanel from './form-config.vue';
 import ConfigTable from '../../common/config-table.vue';
 import InfoMixins from '../../common/info-common';
-import FastTable from '../../widget/fast-iview-table.vue';
+import {FastViewTable as FastTable} from "@ajaxjs/ui";
 
 /**
  * 内页

@@ -35,3 +35,37 @@
     text-align: center;
 }
 </style>
+<style lang="less">
+.search-panel {
+    border-bottom: 1px solid lightgray;
+    background-image: linear-gradient(#fefefe, #e6e6e6);
+    height: 69px;
+    padding-top: 14px;
+    text-align: center;
+}
+
+.http-method {
+    padding: 1px 6px;
+    margin-right: 5px;
+    border-radius: 3px;
+    font-size: 8px;
+
+    &.get {
+        color: #3175fe;
+        border: 1px solid #3175fe;
+    }
+
+    &.post {
+        color: green;
+        border: 1px solid green;
+    }
+    &.put {
+        color: rgb(224, 60, 254);
+        border: 1px solid rgb(224, 60, 254);
+    }
+    &.delete {
+        color: red;
+        border: 1px solid red;
+    }
+}
+</style>

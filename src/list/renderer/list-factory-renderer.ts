@@ -1,6 +1,5 @@
 import FromRenderer from '../../form/renderer/form-factory-renderer.vue';
-import { xhr_get, xhr_del } from '@ajaxjs/util/dist/util/xhr';
-import { prepareRequest } from '../../widget/data-binding';
+import { Xhr } from "@ajaxjs/util";
 
 /**
  * 列表渲染器
@@ -49,7 +48,7 @@ export default {
             let r: ManagedRequest = prepareRequest(listCfg.dataBinding, params, this);
             this.list.data = []; // 清空数据
 
-            xhr_get(r.url, (j: RepsonseResult) => {
+            Xhr.xhr_get(r.url, (j: RepsonseResult) => {
                 if (j.status) {
                     this.list.data = j.data.rows;
                     this.list.total = j.data.total;
@@ -84,7 +83,7 @@ export default {
                 title: "确认删除",
                 content: "是否删除" + text + "？",
                 onOk: () => {
-                    xhr_del(url, (j: RepsonseResult) => {
+                    Xhr.xhr_del(url, (j: RepsonseResult) => {
                         if (j && j.status) {
                             this.$Message.success('删除成功');
                             this.getData();
@@ -127,7 +126,7 @@ export default {
                 formCfgId = this.cfg.bindingForm.id;//  表单配置
                 debugger
 
-            xhr_get(`${apiRoot}/common_api/widget_config/${formCfgId}`, (j: RepsonseResult) => {
+                Xhr.xhr_get(`${apiRoot}/common_api/widget_config/${formCfgId}`, (j: RepsonseResult) => {
                 if (j.status) {
                     this.isShowForm = true;
                     this.form.cfg = j.data.config;// 数据库记录转换到 配置对象;
@@ -151,7 +150,7 @@ export default {
                 title: '删除实体',
                 content: `<p>确定删除 ${row.name || '记录'} #${row.id}？</p>`,
                 onOk: () => {
-                    xhr_del(`${api}/${row.id}`, (j: RepsonseResult) => {
+                    Xhr.xhr_del(`${api}/${row.id}`, (j: RepsonseResult) => {
                         if (j.status) {
                             this.$Message.info('删除成功');
                             this.getData();
@@ -180,3 +179,48 @@ export default {
         }
     }
 };
+
+/**
+ * 数据绑定的公用方法
+ */
+
+const API_ROOT_PREFIX = '{API_ROOT_PREFIX}';
+
+
+/**
+ * 请求前的准备
+ * 
+ * @param dataBinding   配置对象
+ * @param params        请求参数，可选的。如果没有则创建一个 空对象
+ * @param cmp           组件实例，可选的。用于 beforeRequest 函数指定 this 指针
+ * @returns 请求参数
+ */
+export function prepareRequest(dataBinding: DataBinding, params?: any, cmp?: any): ManagedRequest {
+    if (!dataBinding) {
+        alert("未有数据绑定！");
+        return;
+    }
+
+    if (!dataBinding.url) {
+        alert("未有 API 地址接口");
+        return;
+    }
+
+    let url: string = dataBinding.url;
+
+    if (url.indexOf(API_ROOT_PREFIX) != -1)
+        url = dataBinding.url.replace(API_ROOT_PREFIX, window['config'].dsApiRoot);
+
+    if (!params)
+        params = {};
+
+    if (dataBinding.baseParams)
+        Object.assign(params, JSON.parse(dataBinding.baseParams));
+
+    if (dataBinding.beforeRequest) {
+        let before: Function = new Function('params', dataBinding.beforeRequest);
+        before.call(cmp || this, params);
+    }
+
+    return { url: url, params: params };
+}

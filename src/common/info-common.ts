@@ -1,4 +1,4 @@
-import { xhr_get, xhr_put, xhr_post } from '@ajaxjs/util/dist/util/xhr';
+import { Xhr } from "@ajaxjs/util";
 
 export default {
     props: {
@@ -32,7 +32,7 @@ export default {
          * 获取单个数据
          */
         getDataBase(cb: Function): void {
-            xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.id}`, (j: RepsonseResult) => {
+            Xhr.xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.id}`, (j: RepsonseResult) => {
                 let r: any = j.data;
 
                 if (r) {
@@ -68,14 +68,14 @@ export default {
             if (this.id) {
                 valueObj.id = this.id;
 
-                xhr_put(`${this.apiPrefix}/common_api/widget_config`, (j: RepsonseResult) => {
+                Xhr.xhr_put(`${this.apiPrefix}/common_api/widget_config`, (j: RepsonseResult) => {
                     if (j.status)
                         this.$Message.success('修改成功');
                     else
                         this.$Message.warning(j.message);
                 }, valueObj);
             } else
-                xhr_post(`${this.apiPrefix}/common_api/widget_config`, (j: RepsonseResult) => {
+                Xhr.xhr_post(`${this.apiPrefix}/common_api/widget_config`, (j: RepsonseResult) => {
                     if (j.status) {
                         this.$Message.success('创建成功');
                         setTimeout(() => this.id = j.data, 800);

@@ -1,4 +1,4 @@
-import { xhr_get, xhr_put, xhr_post } from '@ajaxjs/util/dist/util/xhr';
+import { Xhr } from "@ajaxjs/util";
 import { findNode } from "./info/info";
 import FromRenderer from "./renderer/form-factory-renderer.vue";
 
@@ -36,7 +36,7 @@ export default {
                 this.$refs.FromRenderer.data = {};
             }
 
-            xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.formId}`, (j: RepsonseResult) => {
+            Xhr.xhr_get(`${this.apiPrefix}/common_api/widget_config/${this.formId}`, (j: RepsonseResult) => {
                 if (j && j.status) {
                     this.cfg = j.data.config;
 
@@ -47,7 +47,7 @@ export default {
                     if (isJsonBased) {
                         this.status = 2; // JSON 配置模式下没有新建
 
-                        xhr_get(dataBinding.url, (j: RepsonseResult) => {
+                        Xhr.xhr_get(dataBinding.url, (j: RepsonseResult) => {
                             this.oldJson = j; // 完整的
 
                             let jsonTarget: any = findNode(this.oldJson, this.entityId.split(".")); // 部分的，目标的
@@ -59,7 +59,7 @@ export default {
                         if (this.entityId) {// 加载单笔内容
                             this.$refs.FromRenderer.data = {};
 
-                            xhr_get(`${dataBinding.url}/${this.entityId}`, (j: RepsonseResult) => {
+                            Xhr.xhr_get(`${dataBinding.url}/${this.entityId}`, (j: RepsonseResult) => {
                                 if (isJsonBased) {
                                     this.$refs.FromRenderer.data = j;
                                     this.$refs.FromRenderer.$forceUpdate();
@@ -103,12 +103,12 @@ export default {
                 api = cfg.updateApi;
                 let r: ManagedRequest = this._initParams(api);
 
-                xhr_post(r.url, callback, r.params);
+                Xhr.xhr_post(r.url, callback, r.params);
             } else {
                 api = cfg.createApi;
                 let r: ManagedRequest = this._initParams(api);
 
-                (api.httpMethod == 'post' ? xhr_post : xhr_put)(r.url, callback, r.params);
+                (api.httpMethod == 'post' ? Xhr.xhr_post : Xhr.xhr_put)(r.url, callback, r.params);
             }
         },
 
@@ -127,13 +127,13 @@ export default {
                 let json: string = JSON.stringify(r.params);
                 console.log(json);
 
-                xhr_post(api.url, (j: RepsonseResult) => {
+                Xhr.xhr_post(api.url, (j: RepsonseResult) => {
                     console.log(j)
                 }, json, { contentType: 'application/json' });
             } else {
                 let r: ManagedRequest = this._initParams(api, this.$refs.FromRenderer.data, this);
 
-                xhr_put(r.url, (j: RepsonseResult) => {
+                Xhr.xhr_put(r.url, (j: RepsonseResult) => {
                     if (j.status)
                         this.$Message.success(j.message);
                     else
