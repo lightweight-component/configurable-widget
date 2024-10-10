@@ -7,6 +7,7 @@ export default {
         initId: Number, // 有 id 表示编辑
     },
     data() {
+
         return {
             id: this.initId || 0,
             apiPrefix: this.$route.query.apiPrefix,
@@ -26,6 +27,12 @@ export default {
             this.id = Number(id);
             this.getData();
         }
+    },
+    beforeUpdate() {
+        let id: string = this.$route.query.id
+
+        if (!id)
+            this.id = null; // clear last id for creation
     },
     methods: {
         /**

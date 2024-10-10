@@ -135,6 +135,7 @@ export default {
                 this.datasourceId = selected.datasourceId;
                 this.datasourceName = selected.datasourceName;
                 selected.fields.forEach((item: CheckableDataBaseColumnMeta) => toCfg(item, this.cfg.fields));
+                this.$refs.configTable.fields = this.cfg.fields
             } else
                 this.$Message.warning('未选择任何字段');
         },
